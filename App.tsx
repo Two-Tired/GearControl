@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import React from "react";
 import store from "./src/redux/store";
 import { Provider } from "react-redux";
-import { Settings } from "./src/components/settings/settings";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { SettingScreen } from "./src/screens/SettingScreen";
+import { HomeScreen } from "./src/screens/HomeScreen";
+import { Button } from "react-native";
+import { RootStackParamList } from "./src/types";
+
+const RootStack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
     <Provider store={store}>
-      <Settings></Settings>
+      <NavigationContainer>
+        <RootStack.Navigator initialRouteName="Home">
+          <RootStack.Screen
+            name="Home"
+            component={HomeScreen}
+          ></RootStack.Screen>
+          <RootStack.Screen
+            name="Preferences"
+            component={SettingScreen}
+          ></RootStack.Screen>
+        </RootStack.Navigator>
+      </NavigationContainer>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-  },
-  paragraph: {
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-  },
-});

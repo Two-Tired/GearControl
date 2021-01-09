@@ -1,4 +1,4 @@
-import { ClearSettingsActions, SetSettingsAction } from "../types";
+import { ClearSettingsActions, SetSettingsAction } from "../../types";
 
 export enum SETTINGS_ACTION_TYPES {
   SET_SETTINGS = "SETTINGS/SET_SETTINGS",

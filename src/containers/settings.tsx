@@ -1,8 +1,8 @@
 import { Dispatch } from "react";
 import { connect } from "react-redux";
-import { setSettings } from "../../redux/settings/actions";
-import { AppState, SettingsAction } from "../../redux/types";
-import SettingsBase from "../../containers/settings-base";
+import { setSettings } from "../redux/settings/actions";
+import { AppState, SettingsAction } from "../types";
+import SettingsBase from "../components/settings/settings-base";
 
 const mapStateToProps = (state: AppState) => ({
   settings: state.settings,

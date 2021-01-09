@@ -34,3 +34,7 @@ yarn android
         * Schaltvorrausschau ("Gleich musst du runter schalten")
     * Routing
     * 
+
+# Quellen:
+* React + Redux + Typescript: https://medium.com/@killerchip0/react-native-redux-typescript-guide-f251db03428f
+* React Navigation: https://reactnavigation.org/docs/getting-started

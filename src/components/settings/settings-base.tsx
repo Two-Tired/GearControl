@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
-import { SettingsState } from "../redux/types";
+import { SettingsState } from "../../types";
 
 interface Props {
   settings: SettingsState;
@@ -20,7 +20,9 @@ export default class SettingsBase extends React.Component<Props, {}> {
       <View style={styles.container}>
         <Text style={[styles.item, styles.baseText]}>One.</Text>
         <Text style={[styles.item, styles.baseText]}>Two.</Text>
-        <Text style={[styles.item, styles.baseText]}>Three.</Text>
+        <Text style={[styles.item, styles.baseText]}>Favorite Cadence:</Text>
+        <Text style={[styles.item, styles.baseText]}>{settings.favoriteCadence}</Text>
+
       </View>
     );
   }

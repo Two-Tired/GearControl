@@ -1,4 +1,4 @@
-import { SetSettingsAction, SettingsAction, SettingsState } from "../types";
+import { SetSettingsAction, SettingsAction, SettingsState } from "../../types";
 import { SETTINGS_ACTION_TYPES } from "./actions";
 
 export const initialState: SettingsState = {
