@@ -8,16 +8,16 @@ type Props = {
 };
 
 export function HomeScreen({ route, navigation }: Props) {
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button
-          onPress={() => navigation.navigate("Preferences")}
-          title="Preferences"
-        />
-      ),
-    });
-  }, [navigation]);
+  // React.useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerRight: () => (
+  //       <Button
+  //         onPress={() => navigation.navigate("Preferences")}
+  //         title="Preferences"
+  //       />
+  //     ),
+  //   });
+  // }, [navigation]);
 
   return (
     <View style={styles.container}>

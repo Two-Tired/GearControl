@@ -7,24 +7,34 @@ import { SettingScreen } from "./src/screens/SettingScreen";
 import { HomeScreen } from "./src/screens/HomeScreen";
 import { Button } from "react-native";
 import { RootStackParamList } from "./src/types";
-
+import { Provider as PaperProvider } from 'react-native-paper';
+import { CustomNavigationBar} from "./src/screens/CustomNavigationBar";
+ 
 const RootStack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <RootStack.Navigator initialRouteName="Home">
-          <RootStack.Screen
-            name="Home"
-            component={HomeScreen}
-          ></RootStack.Screen>
-          <RootStack.Screen
-            name="Preferences"
-            component={SettingScreen}
-          ></RootStack.Screen>
-        </RootStack.Navigator>
-      </NavigationContainer>
+    <Provider store={store}> 
+       <PaperProvider>
+        <NavigationContainer>
+          <RootStack.Navigator 
+            initialRouteName="Home"
+            screenOptions={{
+              header:  (props) => <CustomNavigationBar {...props} />,
+            }}>
+            <RootStack.Screen
+              name="Home"
+              component={HomeScreen}
+            ></RootStack.Screen>
+            <RootStack.Screen
+              name="Preferences"
+              component={SettingScreen}
+            ></RootStack.Screen>
+          </RootStack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
     </Provider>
   );
 }
+
+
