@@ -19,7 +19,7 @@ export const settings = (
 
       return { ...settingData };
     case SETTINGS_ACTION_TYPES.CLEAR_SETTINGS:
-      return state;
+      return initialState;
     default:
       return state;
   }

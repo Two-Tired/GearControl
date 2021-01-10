@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { connect } from "react-redux";
-import { setSettings } from "../redux/settings/actions";
+import { clearSettings, setSettings } from "../redux/settings/actions";
 import { AppState, SettingsAction } from "../types";
 import SettingsBase from "../components/settings/settings-base";
 
@@ -25,6 +25,9 @@ const mapDispatchToProps = (dispatch: Dispatch<SettingsAction>) => ({
         favoriteCadence
       )
     );
+  },
+  onSettingsClear: () => {
+    dispatch(clearSettings());
   },
 });
 
