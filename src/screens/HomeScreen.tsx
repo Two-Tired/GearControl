@@ -1,6 +1,8 @@
 import React from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
-import { HomeScreenNavigationProp, HomeScreenRouteProp } from "../types";
+import { View, StyleSheet } from "react-native";
+import { Subheading, Divider, Text } from "react-native-paper";
+import { useSelector } from "react-redux";
+import { HomeScreenNavigationProp, HomeScreenRouteProp, SettingsState, AppState } from "../types";
 
 type Props = {
   route: HomeScreenRouteProp;
@@ -8,20 +10,23 @@ type Props = {
 };
 
 export function HomeScreen({ route, navigation }: Props) {
-  // React.useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerRight: () => (
-  //       <Button
-  //         onPress={() => navigation.navigate("Preferences")}
-  //         title="Preferences"
-  //       />
-  //     ),
-  //   });
-  // }, [navigation]);
+  const settings = useSelector<AppState, SettingsState>(store => store.settings)
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>This is the HomeScreen</Text>
+      
+      <Subheading>Front Sprockets</Subheading>
+      {
+        settings.frontSprockets.map((value, index) => {
+          return <Text>{"Sprocket " + (index + 1) + ": " + value}</Text>
+        })
+      }
+      <Subheading>Rear Sprockets</Subheading>
+      {
+        settings.rearSprockets.map((value, index) => {
+          return <Text>{"Sprocket " + (index + 1) + ": " + value}</Text>
+        })
+      }
     </View>
   );
 }
@@ -31,8 +36,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  text: {
-    fontSize: 30,
   },
 });
