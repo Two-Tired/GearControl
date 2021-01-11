@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Text, TextInput, Button } from "react-native-paper";
+import { Text, TextInput, Button, FAB, Divider, Subheading } from "react-native-paper";
 import { SettingsState } from "../../types";
 
 interface Props {
@@ -27,43 +27,10 @@ export default class SettingsBase extends React.Component<Props, {}> {
     return (
       <View style={styles.container}>
         <View style={styles.container}>
+          <Subheading style={styles.category}>Front Sprockets</Subheading>
           <View style={styles.horizontal}>
-          <Button
-            icon="plus"
-            mode="contained"
-            onPress={() => {
-              frontInputs.push(0);
-              onSettingsSave(
-                frontInputs.length,
-                rearInputs.length,
-                frontInputs,
-                rearInputs,
-                favoriteCadence
-              );
-            }}
-          >
-            Add front sprocket
-          </Button>
-          <Button
-            icon="minus"
-            mode="contained"
-            onPress={() => {
-              frontInputs.pop();
-              onSettingsSave(
-                frontInputs.length,
-                rearInputs.length,
-                frontInputs,
-                rearInputs,
-                favoriteCadence
-              );
-            }}
-          >
-            Remove front sprocket
-          </Button>
-          </View>
-          <View style={styles.horizontal}>
-          {frontInputs.map((value, index) => {
-            return (              
+            {frontInputs.map((value, index) => {
+              return (
                 <TextInput
                   mode="flat"
                   label={"Sprocket  " + (index + 1)}
@@ -79,46 +46,46 @@ export default class SettingsBase extends React.Component<Props, {}> {
                     );
                   }}
                 />
-            );
-          })}
+              );
+            })}
           </View>
           <View style={styles.horizontal}>
-          <Button
-            icon="plus"
-            mode="contained"
-            onPress={() => {
-              rearInputs.push(0);
-              onSettingsSave(
-                frontInputs.length,
-                rearInputs.length,
-                frontInputs,
-                rearInputs,
-                favoriteCadence
-              );
-            }}
-          >
-            Add rear sprocket
-          </Button>
-          <Button
-            icon="minus"
-            mode="contained"
-            onPress={() => {
-              rearInputs.pop();
-              onSettingsSave(
-                frontInputs.length,
-                rearInputs.length,
-                frontInputs,
-                rearInputs,
-                favoriteCadence
-              );
-            }}
-          >
-            Remove rear sprocket
-          </Button>
+            <FAB
+              icon="plus"
+              small
+              label="add"
+              onPress={() => {
+                frontInputs.push(0);
+                onSettingsSave(
+                  frontInputs.length,
+                  rearInputs.length,
+                  frontInputs,
+                  rearInputs,
+                  favoriteCadence
+                );
+              }}
+            />
+            <FAB
+              icon="minus"
+              small
+              label="remove"
+              onPress={() => {
+                frontInputs.pop();
+                onSettingsSave(
+                  frontInputs.length,
+                  rearInputs.length,
+                  frontInputs,
+                  rearInputs,
+                  favoriteCadence
+                );
+              }}
+            />
           </View>
+          <Divider />
+          <Subheading style={styles.category}>Rear Sprockets</Subheading>
           <View style={styles.horizontal}>
-          {rearInputs.map((value, index) => {
-            return (              
+            {rearInputs.map((value, index) => {
+              return (
                 <TextInput
                   mode="flat"
                   label={"Sprocket  " + (index + 1)}
@@ -128,15 +95,48 @@ export default class SettingsBase extends React.Component<Props, {}> {
                     onSettingsSave(
                       frontInputs.length,
                       rearInputs.length,
-                      frontInputs, 
+                      frontInputs,
                       rearInputs,
                       favoriteCadence
                     );
                   }}
                 />
-            );
-          })}
+              );
+            })}
           </View>
+          <View style={styles.horizontal}>
+            <FAB
+              icon="plus"
+              small
+              label="add"
+              onPress={() => {
+                rearInputs.push(0);
+                onSettingsSave(
+                  frontInputs.length,
+                  rearInputs.length,
+                  frontInputs,
+                  rearInputs,
+                  favoriteCadence
+                );
+              }}
+            />
+            <FAB
+              icon="minus"
+              small
+              label="remove"
+              onPress={() => {
+                rearInputs.pop();
+                onSettingsSave(
+                  frontInputs.length,
+                  rearInputs.length,
+                  frontInputs,
+                  rearInputs,
+                  favoriteCadence
+                );
+              }}
+            />
+          </View>
+          <Divider />
           <TextInput
             mode="flat"
             label="Favorite Cadence"
@@ -154,10 +154,10 @@ export default class SettingsBase extends React.Component<Props, {}> {
         </View>
         <View style={styles.bottom}>
           <View style={styles.horizontal}>
-            <Button style={styles.button} onPress={() => {onSettingsSave(frontInputs.length, rearInputs.length, frontInputs, rearInputs, favoriteCadence)}} mode="outlined">
+            <Button style={styles.button} onPress={() => { onSettingsSave(frontInputs.length, rearInputs.length, frontInputs, rearInputs, favoriteCadence) }} mode="outlined">
               Clear
             </Button>
-            <Button style={styles.button} onPress={() => {onSettingsClear()}} mode="contained">
+            <Button style={styles.button} onPress={() => { onSettingsClear() }} mode="contained">
               Save
             </Button>
           </View>
@@ -177,9 +177,13 @@ const styles = StyleSheet.create({
   horizontal: {
     justifyContent: "center",
     flexDirection: "row",
+    flexWrap: "wrap",
     margin: 20,
   },
   button: {
     width: "40%",
   },
+  category: {
+    alignSelf: "center"
+  }
 });
