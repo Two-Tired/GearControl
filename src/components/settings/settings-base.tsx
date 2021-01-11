@@ -27,6 +27,7 @@ export default class SettingsBase extends React.Component<Props, {}> {
     return (
       <View style={styles.container}>
         <View style={styles.container}>
+          <View style={styles.horizontal}>
           <Button
             icon="plus"
             mode="contained"
@@ -59,9 +60,10 @@ export default class SettingsBase extends React.Component<Props, {}> {
           >
             Remove front sprocket
           </Button>
+          </View>
+          <View style={styles.horizontal}>
           {frontInputs.map((value, index) => {
-            return (
-              <View style={styles.horizontal}>
+            return (              
                 <TextInput
                   mode="flat"
                   label={"Sprocket  " + (index + 1)}
@@ -77,9 +79,10 @@ export default class SettingsBase extends React.Component<Props, {}> {
                     );
                   }}
                 />
-              </View>
             );
           })}
+          </View>
+          <View style={styles.horizontal}>
           <Button
             icon="plus"
             mode="contained"
@@ -112,9 +115,10 @@ export default class SettingsBase extends React.Component<Props, {}> {
           >
             Remove rear sprocket
           </Button>
+          </View>
+          <View style={styles.horizontal}>
           {rearInputs.map((value, index) => {
-            return (
-              <View style={styles.horizontal}>
+            return (              
                 <TextInput
                   mode="flat"
                   label={"Sprocket  " + (index + 1)}
@@ -124,15 +128,15 @@ export default class SettingsBase extends React.Component<Props, {}> {
                     onSettingsSave(
                       frontInputs.length,
                       rearInputs.length,
-                      frontInputs,
+                      frontInputs, 
                       rearInputs,
                       favoriteCadence
                     );
                   }}
                 />
-              </View>
             );
           })}
+          </View>
           <TextInput
             mode="flat"
             label="Favorite Cadence"
@@ -148,7 +152,7 @@ export default class SettingsBase extends React.Component<Props, {}> {
             }
           />
         </View>
-        {/* <View style={styles.bottom}>
+        <View style={styles.bottom}>
           <View style={styles.horizontal}>
             <Button style={styles.button} onPress={() => {onSettingsSave(frontInputs.length, rearInputs.length, frontInputs, rearInputs, favoriteCadence)}} mode="outlined">
               Clear
@@ -157,7 +161,7 @@ export default class SettingsBase extends React.Component<Props, {}> {
               Save
             </Button>
           </View>
-        </View> */}
+        </View>
       </View>
     );
   }
@@ -173,7 +177,7 @@ const styles = StyleSheet.create({
   horizontal: {
     justifyContent: "center",
     flexDirection: "row",
-    margin: 10,
+    margin: 20,
   },
   button: {
     width: "40%",
