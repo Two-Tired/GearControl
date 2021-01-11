@@ -137,29 +137,31 @@ export default class SettingsBase extends React.Component<Props, {}> {
             />
           </View>
           <Divider />
-          <TextInput
-            mode="flat"
-            label="Favorite Cadence"
-            value={favoriteCadence.toString()}
-            onChangeText={(text) =>
-              onSettingsSave(
-                frontInputs.length,
-                rearInputs.length,
-                frontInputs,
-                rearInputs,
-                parseInt(text)
-              )
-            }
-          />
+          <View style={styles.horizontal}>
+            <TextInput
+              mode="flat"
+              label="Favorite Cadence"
+              value={favoriteCadence.toString()}
+              onChangeText={(text) =>
+                onSettingsSave(
+                  frontInputs.length,
+                  rearInputs.length,
+                  frontInputs,
+                  rearInputs,
+                  parseInt(text)
+                )
+              }
+            />
+          </View>
         </View>
         <View style={styles.bottom}>
           <View style={styles.horizontal}>
-            <Button style={styles.button} onPress={() => { onSettingsSave(frontInputs.length, rearInputs.length, frontInputs, rearInputs, favoriteCadence) }} mode="outlined">
-              Clear
+            <Button style={styles.button} onPress={() => { onSettingsClear() }} mode="outlined">
+              Reset to Defaults
             </Button>
-            <Button style={styles.button} onPress={() => { onSettingsClear() }} mode="contained">
+            <Button style={styles.button} onPress={() => { onSettingsSave(frontInputs.length, rearInputs.length, frontInputs, rearInputs, favoriteCadence) }} mode="contained">
               Save
-            </Button>
+            </Button>            
           </View>
         </View>
       </View>
