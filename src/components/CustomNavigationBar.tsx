@@ -1,13 +1,14 @@
 import React from "react";
 import { Appbar, Menu } from "react-native-paper";
 import { useTranslation } from "react-i18next";
+import { HomeScreenNavigationProp, HomeScreenRouteProp } from "../types";
 
-// type Props = {
-//     navigation: HomeScreenNavigationProp;
-//     previous: HomeScreenRouteProp;
-// };
+type Props = {
+    navigation: HomeScreenNavigationProp;
+    previous: HomeScreenRouteProp;
+};
 
-export function CustomNavigationBar({ navigation, previous }) {
+export function CustomNavigationBar({ navigation, previous }: Props) {
   const [visible, setVisible] = React.useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
