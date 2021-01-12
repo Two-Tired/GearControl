@@ -2,7 +2,12 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Subheading, Divider, Text, DataTable } from "react-native-paper";
 import { useSelector } from "react-redux";
-import { HomeScreenNavigationProp, HomeScreenRouteProp, SettingsState, AppState } from "../types";
+import {
+  HomeScreenNavigationProp,
+  HomeScreenRouteProp,
+  SettingsState,
+  AppState,
+} from "../types";
 // import { MapView } from 'react-native-maps';
 
 type Props = {
@@ -11,7 +16,9 @@ type Props = {
 };
 
 export function HomeScreen({ route, navigation }: Props) {
-  const settings = useSelector<AppState, SettingsState>(store => store.settings)
+  const settings = useSelector<AppState, SettingsState>(
+    (store) => store.settings
+  );
 
   return (
     <View style={styles.container}>
@@ -31,27 +38,25 @@ export function HomeScreen({ route, navigation }: Props) {
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>Front \ Rear</DataTable.Title>
-          {
-            settings.rearSprockets.map((value, index) => {
-              return <DataTable.Title numeric>{value}</DataTable.Title>
-            })
-          }
+          {settings.rearSprockets.map((value, index) => {
+            return <DataTable.Title numeric>{value}</DataTable.Title>;
+          })}
         </DataTable.Header>
-        {
-          settings.frontSprockets.map((value, index) => {
-            return <DataTable.Row>
-              <DataTable.Cell >{value}</DataTable.Cell>
-              {
-                settings.rearSprockets.map((rearValue, rearIndex) => {
-                  return <DataTable.Cell numeric>{(value / rearValue).toFixed(2)}</DataTable.Cell>
-                })
-              }
+        {settings.frontSprockets.map((value, index) => {
+          return (
+            <DataTable.Row>
+              <DataTable.Cell>{value}</DataTable.Cell>
+              {settings.rearSprockets.map((rearValue, rearIndex) => {
+                return (
+                  <DataTable.Cell numeric>
+                    {(value / rearValue).toFixed(2)}
+                  </DataTable.Cell>
+                );
+              })}
             </DataTable.Row>
-          })
-        }
+          );
+        })}
       </DataTable>
-
-
     </View>
   );
 }

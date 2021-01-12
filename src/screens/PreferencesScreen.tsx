@@ -1,11 +1,11 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { Settings } from "../containers/settings";
+import { Preferences } from "../components/preferences/preferences";
 
-export function SettingScreen() {
+export function PreferencesScreen() {
   return (
     <View style={styles.container}>
-      <Settings></Settings>
+      <Preferences></Preferences>
     </View>
   );
 }
