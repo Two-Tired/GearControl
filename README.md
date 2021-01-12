@@ -39,3 +39,4 @@ yarn android
 * React + Redux + Typescript: https://medium.com/@killerchip0/react-native-redux-typescript-guide-f251db03428f
 * React Navigation: https://reactnavigation.org/docs/getting-started
 * React Localization: https://medium.com/cybermonkey/multiple-language-support-in-react-native-part-1-fa6966b62332
+* React Persist: https://github.com/rt2zz/redux-persist#storage-engines
