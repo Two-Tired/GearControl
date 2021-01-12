@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { Subheading, Divider, Text, DataTable } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { HomeScreenNavigationProp, HomeScreenRouteProp, SettingsState, AppState } from "../types";
-// import { MapView } from 'react-native-maps';
+import { RasterTiles } from "../components/map/RasterTiles";
 
 type Props = {
   route: HomeScreenRouteProp;
@@ -27,7 +27,6 @@ export function HomeScreen({ route, navigation }: Props) {
           return <Text>{"Sprocket " + (index + 1) + ": " + value}</Text>
         })
       } */}
-      {/* <MapView style={styles.map} /> */}
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>Front \ Rear</DataTable.Title>
@@ -51,6 +50,7 @@ export function HomeScreen({ route, navigation }: Props) {
         }
       </DataTable>
 
+      {/* <RasterTiles /> */}
 
     </View>
   );
