@@ -5,4 +5,5 @@ export default {
   frontSprockets: "Front Sprockets",
   favoriteCadence: "Favorite Cadence",
   preferences: "Preferences",
+  reset: "Reset",
 };

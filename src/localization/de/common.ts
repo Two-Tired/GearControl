@@ -5,4 +5,5 @@ export default {
   frontSprockets: "Blätter (vorne)",
   favoriteCadence: "Gewünschte Trittfrequenz",
   preferences: "Einstellungen",
+  reset: "Zurücksetzen",
 };

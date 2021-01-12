@@ -133,16 +133,7 @@ export function Preferences() {
             }}
             mode="outlined"
           >
-            Reset to Defaults
-          </Button>
-          <Button
-            style={styles.button}
-            onPress={() => {
-              saveSettings(frontInputs, rearInputs, favoriteCadence);
-            }}
-            mode="contained"
-          >
-            Save
+            {t("reset")}
           </Button>
         </View>
       </View>
