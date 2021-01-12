@@ -20,9 +20,15 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "de.twotired.app",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDFdVcP1MuRPKTR48v4oEL_4jWtpVUg80c"
+        }
       }
     },
     "web": {
