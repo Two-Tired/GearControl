@@ -3,15 +3,24 @@ import { StackNavigationProp } from "@react-navigation/stack";
 
 // Types for Navigation
 export type RootStackParamList = {
-  Home: undefined,
-  Preferences: undefined,
-}
+  Home: undefined;
+  Preferences: undefined;
+};
 
-export type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
-export type PreferencesScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Preferences'>;
+export type HomeScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Home"
+>;
+export type PreferencesScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Preferences"
+>;
 
-export type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
-export type PreferencesScreenRouteProp = RouteProp<RootStackParamList, 'Preferences'>;
+export type HomeScreenRouteProp = RouteProp<RootStackParamList, "Home">;
+export type PreferencesScreenRouteProp = RouteProp<
+  RootStackParamList,
+  "Preferences"
+>;
 
 // Type for Settings
 export type SettingsState = {
