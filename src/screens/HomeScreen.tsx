@@ -39,16 +39,16 @@ export function HomeScreen({ route, navigation }: Props) {
         <DataTable.Header>
           <DataTable.Title>Front \ Rear</DataTable.Title>
           {settings.rearSprockets.map((value, index) => {
-            return <DataTable.Title numeric>{value}</DataTable.Title>;
+            return <DataTable.Title key={index} numeric>{value}</DataTable.Title>;
           })}
         </DataTable.Header>
         {settings.frontSprockets.map((value, index) => {
           return (
             <DataTable.Row>
               <DataTable.Cell>{value}</DataTable.Cell>
-              {settings.rearSprockets.map((rearValue, rearIndex) => {
+              {settings.rearSprockets.map((rearValue, index) => {
                 return (
-                  <DataTable.Cell numeric>
+                  <DataTable.Cell key={index} numeric>
                     {(value / rearValue).toFixed(2)}
                   </DataTable.Cell>
                 );

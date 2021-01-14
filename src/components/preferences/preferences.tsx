@@ -48,6 +48,7 @@ export function Preferences() {
           {frontInputs.map((value, index) => {
             return (
               <TextInput
+                key={index}
                 mode="flat"
                 label={t("frontSprocket", { number: index + 1 })}
                 value={value.toString()}
@@ -83,6 +84,7 @@ export function Preferences() {
           {rearInputs.map((value, index) => {
             return (
               <TextInput
+                key={index}
                 mode="flat"
                 label={t("rearSprocket", { number: index + 1 })}
                 value={value.toString()}

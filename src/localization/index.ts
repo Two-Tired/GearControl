@@ -5,7 +5,7 @@ import i18n, {
 } from "i18next";
 import { initReactI18next } from "react-i18next";
 import AsyncStorage from "@react-native-community/async-storage";
-import * as RNLocalize from "react-native-localize";
+import * as Localization from 'expo-localization';
 import en from "./en";
 import de from "./de";
 
@@ -39,11 +39,10 @@ const languageDetector: LanguageDetectorAsyncModule = {
             "No language is set, choosing the best available or English as fallback"
           );
         }
-        const bestLng = RNLocalize.findBestAvailableLanguage(
-          AVAILABLE_LANG_CODES
-        );
+        
+        const bestLng = Localization.locale;
 
-        callback(bestLng?.languageTag ?? "en");
+        callback(bestLng? bestLng : "en");
         return;
       }
       callback(lng);
