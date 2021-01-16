@@ -6,5 +6,6 @@ export default {
   favoriteCadence: "Gewünschte Trittfrequenz [U/min]",
   tireCircumference: "Reifenumfang [mm]",
   preferences: "Einstellungen",
+  test: "test",
   reset: "Zurücksetzen",
 };

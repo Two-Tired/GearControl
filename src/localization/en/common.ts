@@ -6,5 +6,6 @@ export default {
   favoriteCadence: "Favorite Cadence [rpm]",
   tireCircumference: "Tire circumference [mm]",
   preferences: "Preferences",
+  test: "test",
   reset: "Reset",
 };

@@ -18,10 +18,7 @@ export type PreferencesScreenNavigationProp = StackNavigationProp<
 >;
 
 export type HomeScreenRouteProp = RouteProp<RootStackParamList, "Home">;
-export type PreferencesScreenRouteProp = RouteProp<
-  RootStackParamList,
-  "Preferences"
->;
+export type PreferencesScreenRouteProp = RouteProp<RootStackParamList,"Preferences">;
 
 // Type for Settings
 export type SettingsState = {

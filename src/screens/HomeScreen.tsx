@@ -96,7 +96,7 @@ export function HomeScreen({ route, navigation }: Props) {
     return table;
   }
 
-  let testTable = createTestTable([1,2,3,4,5,6,7,8]);
+  let testTable = createTestTable([1,2,3,4,5,6,7,8, 9, 10, 11, 12, 13, 14, 15, 16]);
   // let testTable = [];
 
   return (
@@ -111,15 +111,21 @@ export function HomeScreen({ route, navigation }: Props) {
           <DataTable.Title>Bestmögliche Übersetzung</DataTable.Title>
           <DataTable.Title>Kettenblatt</DataTable.Title>
           <DataTable.Title>Ritzel</DataTable.Title>
+          <DataTable.Title>Tatsächliche Trittfrequenz</DataTable.Title>
+          <DataTable.Title>Abweichung Trittfrequenz</DataTable.Title>
         </DataTable.Header>
         {testTable.map((row, index) => {
+            const actualCadence = row.speed / settings.tireCircumference / row.transmissionBest * 60000;
+
           return (
             <DataTable.Row key={index}>
-              <DataTable.Cell key={index}>{row.speed}</DataTable.Cell>
+              <DataTable.Cell key={index}>{row.speed * 3.6}</DataTable.Cell>
               <DataTable.Cell key={index+1}>{row.transmissionNeeded}</DataTable.Cell>
               <DataTable.Cell key={index+2}>{row.transmissionBest}</DataTable.Cell>
               <DataTable.Cell key={index+3}>{row.sprocketFront}</DataTable.Cell>
               <DataTable.Cell key={index+4}>{row.sprocketRear}</DataTable.Cell>
+              <DataTable.Cell key={index+5}>{actualCadence.toFixed(2)}</DataTable.Cell>
+              <DataTable.Cell key={index+6}>{(settings.favoriteCadence - actualCadence).toFixed(2)}</DataTable.Cell>
             </DataTable.Row>
           );
         })}

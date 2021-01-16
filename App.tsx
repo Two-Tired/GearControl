@@ -10,6 +10,7 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { CustomNavigationBar } from "./src/components/CustomNavigationBar";
 import { PersistGate } from "redux-persist/integration/react";
 import "./src/localization";
+import { TestScreen } from "./src/screens/TestScreen";
 
 const RootStack = createStackNavigator<RootStackParamList>();
 
@@ -33,6 +34,10 @@ export default function App() {
                 name="Preferences"
                 component={PreferencesScreen}
               ></RootStack.Screen>
+              {/* <RootStack.Screen
+                name="Test"
+                component={TestScreen}
+              ></RootStack.Screen> */}
             </RootStack.Navigator>
           </NavigationContainer>
         </PaperProvider>
