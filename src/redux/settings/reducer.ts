@@ -14,7 +14,7 @@ const clearAsyncStorage = async() => {
 }
 
 export const settings = (
-  state: SettingsState = initialState,
+  state: SettingsState = JSON.parse(JSON.stringify(initialState)),
   action: SettingsAction
 ) => {
   switch (action.type) {
@@ -23,8 +23,9 @@ export const settings = (
 
       return { ...settingData };
     case SETTINGS_ACTION_TYPES.CLEAR_SETTINGS:
-      clearAsyncStorage();  
-      return initialState;
+      clearAsyncStorage();
+      console.log(initialState);
+      return JSON.parse(JSON.stringify(initialState));
     default:
       return state;
   }
