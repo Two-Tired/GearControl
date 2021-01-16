@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { View, StyleSheet } from "react-native";
-import { DataTable, Button } from "react-native-paper";
+import { DataTable, Button, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSettings } from "../redux/settings/actions";
+import { setLocation,setLocationError } from "../redux/location/actions";
 import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
   SettingsState,
   AppState,
 } from "../types";
-// import { MapView } from 'react-native-maps';
+
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import { LocationObject } from "expo-location";
 
 type Props = {
   route: HomeScreenRouteProp;
@@ -21,10 +25,24 @@ export function HomeScreen({ route, navigation }: Props) {
   const settings = useSelector<AppState, SettingsState>(
     (store) => store.settings
   );
+  const location = useSelector<AppState, LocationObject>(
+    (store) => store.location
+  );
+
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
   const resetSettings = () => dispatch(clearSettings());
+
+  useEffect(() => {(async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      dispatch(setLocationError());
+    }
+  
+    let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Highest});
+    dispatch(setLocation(location));  
+  })});
 
   return (
     <View style={styles.container}>
@@ -73,6 +91,10 @@ export function HomeScreen({ route, navigation }: Props) {
           >
             {t("reset")}
           </Button>
+        </View>
+        <View>
+            <Text>{JSON.stringify(location.coords)}</Text>
+            <Text>{location.coords.speed}</Text>
         </View>
     </View>
   );
