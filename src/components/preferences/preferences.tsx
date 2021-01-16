@@ -11,6 +11,7 @@ import { AppState, SettingsState } from "../../types";
 import { useSelector, useDispatch } from "react-redux";
 import { clearSettings, setSettings } from "../../redux/settings/actions";
 import { useTranslation } from "react-i18next";
+import { ScrollView } from "react-native";
 
 export function Preferences() {
   const settings = useSelector<AppState, SettingsState>(
@@ -51,7 +52,7 @@ export function Preferences() {
 
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.container}>
         <Subheading style={styles.category}>{t("frontSprockets")}</Subheading>
         <View style={styles.horizontal}>
@@ -159,7 +160,7 @@ export function Preferences() {
           </Button>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
