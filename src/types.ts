@@ -41,6 +41,28 @@ export type ClearSettingsActions = {
   type: string;
 };
 
+export enum SETTINGS_SPROCKET_TYPE {
+  FRONT = "SPROCKET/FRONT",
+  REAR = "SPROCKET/REAR",
+}
+
+export type SetSprocketAction = {
+  type: string;
+  sprocketType: SETTINGS_SPROCKET_TYPE,
+  sprockets: number[];
+}
+
+export enum SETTINGS_NUMBER_TYPE {
+  CADENCE = "NUMBER/CADENCE",
+  CIRCUMFERENCE = "NUMBER/CIRCUMFERENCE",
+}
+
+export type SetNumberAction = {
+  type: string;
+  numberType: SETTINGS_NUMBER_TYPE;
+  value: number;
+}
+
 export type SettingsAction = SetSettingsAction | ClearSettingsActions;
 
 // location
