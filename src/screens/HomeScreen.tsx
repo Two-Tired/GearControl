@@ -44,8 +44,8 @@ export function HomeScreen({ route, navigation }: Props) {
         </DataTable.Header>
         {settings.frontSprockets.map((value, index) => {
           return (
-            <DataTable.Row>
-              <DataTable.Cell>{value}</DataTable.Cell>
+            <DataTable.Row key={index}>
+              <DataTable.Cell key={index}>{value}</DataTable.Cell>
               {settings.rearSprockets.map((rearValue, index) => {
                 return (
                   <DataTable.Cell key={index} numeric>

@@ -15,6 +15,8 @@ yarn android
     * Anzahl Ritzel hinten
     * Anzahl der Zähne pro Ritzel
     * Bevorzugte Trittfrequenz
+    * Reifengröße
+    
 * Main Window
     * Optimale Ritzel für bevorzugte Trittfrequenz
     * Geschwindigkeit
