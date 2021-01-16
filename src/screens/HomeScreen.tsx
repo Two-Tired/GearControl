@@ -59,6 +59,9 @@ export function HomeScreen({ route, navigation }: Props) {
 
   return (
     <View style={styles.container}>
+      <View>
+        <Text style={styles.riesig}>{JSON.stringify(location.coords.speed)}</Text>
+      </View>
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>Front \ Rear</DataTable.Title>
@@ -117,5 +120,8 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "40%",
+  },
+  riesig: {
+    fontSize: 200,
   },
 });
