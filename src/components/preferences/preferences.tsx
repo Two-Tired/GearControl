@@ -24,16 +24,16 @@ export function Preferences() {
   // const frontNumberInput = settings.frontSprocketNumber;
   // const rearNumberInput = settings.rearSprocketNumber;
   const favoriteCadence = settings.favoriteCadence;
+  const tireCircumference = settings.tireCircumference;
 
   const saveSettings = useCallback(
-    (frontInputs, rearInputs, favoriteCadence) =>
+    (frontInputs, rearInputs, favoriteCadence, tireCircumference) =>
       dispatch(
         setSettings(
-          frontInputs.length,
-          rearInputs.length,
           frontInputs,
           rearInputs,
-          favoriteCadence
+          favoriteCadence,
+          tireCircumference,
         )
       ),
     [dispatch]
@@ -54,7 +54,7 @@ export function Preferences() {
                 value={value.toString()}
                 onChangeText={(text) => {
                   frontInputs[index] = parseInt(text);
-                  saveSettings(frontInputs, rearInputs, favoriteCadence);
+                  saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
                 }}
               />
             );
@@ -66,7 +66,7 @@ export function Preferences() {
             small
             onPress={() => {
               frontInputs.push(0);
-              saveSettings(frontInputs, rearInputs, favoriteCadence);
+              saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
             }}
           />
           <FAB
@@ -74,7 +74,7 @@ export function Preferences() {
             small
             onPress={() => {
               frontInputs.pop();
-              saveSettings(frontInputs, rearInputs, favoriteCadence);
+              saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
             }}
           />
         </View>
@@ -90,7 +90,7 @@ export function Preferences() {
                 value={value.toString()}
                 onChangeText={(text) => {
                   rearInputs[index] = parseInt(text);
-                  saveSettings(frontInputs, rearInputs, favoriteCadence);
+                  saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
                 }}
               />
             );
@@ -102,7 +102,7 @@ export function Preferences() {
             small
             onPress={() => {
               rearInputs.push(0);
-              saveSettings(frontInputs, rearInputs, favoriteCadence);
+              saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
             }}
           />
           <FAB
@@ -110,7 +110,7 @@ export function Preferences() {
             small
             onPress={() => {
               rearInputs.pop();
-              saveSettings(frontInputs, rearInputs, favoriteCadence);
+              saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
             }}
           />
         </View>
@@ -121,7 +121,16 @@ export function Preferences() {
             label={t("favoriteCadence")}
             value={favoriteCadence.toString()}
             onChangeText={(text) =>
-              saveSettings(frontInputs, rearInputs, parseInt(text))
+              saveSettings(frontInputs, rearInputs, parseInt(text), tireCircumference)
+            }
+          />
+          <TextInput
+            mode="flat"
+            // label={t("tireCircumference")}
+            label = "test"
+            value={tireCircumference.toString()}
+            onChangeText={(text) =>
+              saveSettings(frontInputs, rearInputs, favoriteCadence, parseFloat(text))
             }
           />
         </View>

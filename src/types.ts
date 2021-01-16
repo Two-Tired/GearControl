@@ -24,11 +24,10 @@ export type PreferencesScreenRouteProp = RouteProp<
 
 // Type for Settings
 export type SettingsState = {
-  frontSprocketNumber: number;
-  rearSprocketNumber: number;
   frontSprockets: number[];
   rearSprockets: number[];
   favoriteCadence: number;
+  tireCircumference: number;
 };
 
 // Types for Actions

@@ -1,7 +1,9 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { View, StyleSheet } from "react-native";
-import { Subheading, Divider, Text, DataTable } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { DataTable, Button } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
+import { clearSettings } from "../redux/settings/actions";
 import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
@@ -19,6 +21,10 @@ export function HomeScreen({ route, navigation }: Props) {
   const settings = useSelector<AppState, SettingsState>(
     (store) => store.settings
   );
+  const {t} = useTranslation();
+  const dispatch = useDispatch();
+
+  const resetSettings = () => dispatch(clearSettings());
 
   return (
     <View style={styles.container}>
@@ -57,6 +63,17 @@ export function HomeScreen({ route, navigation }: Props) {
           );
         })}
       </DataTable>
+      <View style={styles.horizontal}>
+          <Button
+            style={styles.button}
+            onPress={() => {
+              resetSettings();
+            }}
+            mode="outlined"
+          >
+            {t("reset")}
+          </Button>
+        </View>
     </View>
   );
 }
@@ -70,5 +87,14 @@ const styles = StyleSheet.create({
   map: {
     width: 300,
     height: 200,
+  },
+  horizontal: {
+    justifyContent: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    margin: 20,
+  },
+  button: {
+    width: "40%",
   },
 });

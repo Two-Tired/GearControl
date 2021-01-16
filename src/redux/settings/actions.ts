@@ -6,19 +6,17 @@ export enum SETTINGS_ACTION_TYPES {
 }
 
 export const setSettings = (
-  frontSprocketNumber: number,
-  rearSprocketNumber: number,
   frontSprockets: number[],
   rearSprockets: number[],
-  favoriteCadence: number
+  favoriteCadence: number,
+  tireCircumference: number,
 ): SetSettingsAction => ({
   type: SETTINGS_ACTION_TYPES.SET_SETTINGS,
   settingData: {
-    frontSprocketNumber,
-    rearSprocketNumber,
     frontSprockets,
     rearSprockets,
     favoriteCadence,
+    tireCircumference,
   },
 });
 
