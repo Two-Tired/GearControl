@@ -59,32 +59,10 @@ export function HomeScreen({ route, navigation }: Props) {
 
   let testSpeeds = [1,2,3,4,5,6,7,8];
 
-  
+
 
   return (
     <View style={styles.container}>
-      {/* <DataTable>
-        <DataTable.Header>
-          <DataTable.Title>Front \ Rear</DataTable.Title>
-          {settings.rearSprockets.map((value, index) => {
-            return <DataTable.Title key={index} numeric>{value}</DataTable.Title>;
-          })}
-        </DataTable.Header>
-        {settings.frontSprockets.map((value, index) => {
-          return (
-            <DataTable.Row key={index}>
-              <DataTable.Cell key={index}>{value}</DataTable.Cell>
-              {settings.rearSprockets.map((rearValue, index) => {
-                return (
-                  <DataTable.Cell key={index} numeric>
-                    {(value / rearValue).toFixed(2)}
-                  </DataTable.Cell>
-                );
-              })}
-            </DataTable.Row>
-          );
-        })}
-      </DataTable> */}
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>Geschwindigkeit</DataTable.Title>
@@ -141,5 +119,8 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "40%",
+  },
+  riesig: {
+    fontSize: 200,
   },
 });

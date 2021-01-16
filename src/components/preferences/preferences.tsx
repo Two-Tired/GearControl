@@ -7,9 +7,9 @@ import {
   Divider,
   Subheading,
 } from "react-native-paper";
-import { AppState, SettingsState } from "../../types";
+import { AppState, SettingsState, SETTINGS_NUMBER_TYPE, SETTINGS_SPROCKET_TYPE } from "../../types";
 import { useSelector, useDispatch } from "react-redux";
-import { clearSettings, setSettings } from "../../redux/settings/actions";
+import { clearSettings, setNumber, setSettings, setSprockets } from "../../redux/settings/actions";
 import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
 
@@ -39,6 +39,12 @@ export function Preferences() {
       ),
     [dispatch]
   );
+  const saveSprockets = useCallback(
+    (sprockets, sprocketType) => dispatch(setSprockets(sprockets, sprocketType)), [dispatch]
+  );
+  const saveNumber = useCallback(
+    (value, numberType) => dispatch(setNumber(value, numberType)), [dispatch]
+  );
   const resetSettings = () => dispatch(clearSettings());
 
   const tryParseInt = (input: string): number => {
@@ -65,7 +71,7 @@ export function Preferences() {
                 value={value.toString()}
                 onChangeText={(text) => {
                   frontInputs[index] = tryParseInt(text);
-                  saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
+                  saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
                 }}
                 style={styles.inputSprockets}
               />
@@ -78,7 +84,7 @@ export function Preferences() {
             small
             onPress={() => {
               frontInputs.push(0);
-              saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
+                  saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
             }}
           />
           <FAB
@@ -86,7 +92,7 @@ export function Preferences() {
             small
             onPress={() => {
               frontInputs.pop();
-              saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
+                  saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
             }}
           />
         </View>
@@ -102,7 +108,7 @@ export function Preferences() {
                 value={value.toString()}
                 onChangeText={(text) => {
                   rearInputs[index] = tryParseInt(text);
-                  saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
+                  saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
                 }}
                 style={styles.inputSprockets}
               />
@@ -115,7 +121,7 @@ export function Preferences() {
             small
             onPress={() => {
               rearInputs.push(0);
-              saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
+                  saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
             }}
           />
           <FAB
@@ -123,7 +129,7 @@ export function Preferences() {
             small
             onPress={() => {
               rearInputs.pop();
-              saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
+              saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
             }}
           />
         </View>
@@ -134,7 +140,7 @@ export function Preferences() {
             label={t("favoriteCadence")}
             value={favoriteCadence.toString()}
             onChangeText={(text) =>
-              saveSettings(frontInputs, rearInputs, tryParseInt(text), tireCircumference)
+              saveNumber(tryParseInt(text), SETTINGS_NUMBER_TYPE.CADENCE)
             }
             style={styles.inputGeneral}
           />
@@ -143,7 +149,7 @@ export function Preferences() {
             label={t("tireCircumference")}
             value={tireCircumference.toString()}
             onChangeText={(text) =>
-              saveSettings(frontInputs, rearInputs, favoriteCadence, tryParseFloat(text))
+              saveNumber(tryParseFloat(text), SETTINGS_NUMBER_TYPE.CIRCUMFERENCE)
             }
             style={styles.inputGeneral}
           />
