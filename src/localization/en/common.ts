@@ -4,7 +4,7 @@ export default {
   rearSprockets: "Rear Sprockets",
   frontSprockets: "Front Sprockets",
   favoriteCadence: "Favorite Cadence [rpm]",
-  tireCircumference: "Reifenumfang [cm]",
+  tireCircumference: "Tire circumference [mm]",
   preferences: "Preferences",
   reset: "Reset",
 };

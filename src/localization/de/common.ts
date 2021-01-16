@@ -4,7 +4,7 @@ export default {
   rearSprockets: "Ritzel (hinten)",
   frontSprockets: "Blätter (vorne)",
   favoriteCadence: "Gewünschte Trittfrequenz [U/min]",
-  tireCircumference: "Reifenumfang [cm]",
+  tireCircumference: "Reifenumfang [mm]",
   preferences: "Einstellungen",
   reset: "Zurücksetzen",
 };
