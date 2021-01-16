@@ -4,7 +4,7 @@ import { View, StyleSheet } from "react-native";
 import { DataTable, Button, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSettings } from "../redux/settings/actions";
-import { setLocation,setLocationError } from "../redux/location/actions";
+import { setLocation, setLocationError } from "../redux/location/actions";
 import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
@@ -29,36 +29,36 @@ export function HomeScreen({ route, navigation }: Props) {
     (store) => store.location
   );
 
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const resetSettings = () => dispatch(clearSettings());
 
   useEffect(() => {(async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      dispatch(setLocationError());
-    }
-  
-    let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Highest});
-    dispatch(setLocation(location));  
-  })});
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== 'granted') {
+        dispatch(setLocationError());
+      }
+    })();
+
+    // let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Highest});
+    // dispatch(setLocation(location));
+  }, []);
+
+  const locationCallback = (location) => {
+    var date = new Date(location.timestamp);
+    console.log(date.toString() + "  " + JSON.stringify(location.coords));
+    dispatch(setLocation(location));
+  }
+
+  Location.watchPositionAsync({
+    accuracy: Location.Accuracy.Lowest,
+    timeInterval: 5000, // at min 5 sec between measurements
+    distanceInterval: 10, // at min 10 meters between measurements
+  }, locationCallback);
 
   return (
     <View style={styles.container}>
-      {/* <Subheading>Front Sprockets</Subheading> 
-      {
-        settings.frontSprockets.map((value, index) => {
-          return <Text>{"Sprocket " + (index + 1) + ": " + value}</Text>
-        })
-      }
-      <Subheading>Rear Sprockets</Subheading>
-      {
-        settings.rearSprockets.map((value, index) => {
-          return <Text>{"Sprocket " + (index + 1) + ": " + value}</Text>
-        })
-      } */}
-      {/* <MapView style={styles.map} /> */}
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>Front \ Rear</DataTable.Title>
@@ -82,20 +82,19 @@ export function HomeScreen({ route, navigation }: Props) {
         })}
       </DataTable>
       <View style={styles.horizontal}>
-          <Button
-            style={styles.button}
-            onPress={() => {
-              resetSettings();
-            }}
-            mode="outlined"
-          >
-            {t("reset")}
-          </Button>
-        </View>
-        <View>
-            <Text>{JSON.stringify(location.coords)}</Text>
-            <Text>{location.coords.speed}</Text>
-        </View>
+        <Button
+          style={styles.button}
+          onPress={() => {
+            resetSettings();
+          }}
+          mode="outlined"
+        >
+          {t("reset")}
+        </Button>
+      </View>
+      <View>
+        <Text>{new Date(location.timestamp).toString() + "  " + JSON.stringify(location.coords)}</Text>
+      </View>
     </View>
   );
 }
