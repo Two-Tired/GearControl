@@ -61,80 +61,84 @@ export function Preferences() {
     <ScrollView style={styles.container}>
       <View style={styles.container}>
         <Subheading style={styles.category}>{t("frontSprockets")}</Subheading>
-        <View style={styles.horizontal}>
-          {frontInputs.map((value, index) => {
-            return (
-              <TextInput
-                key={index}
-                mode="flat"
-                label={t("frontSprocket", { number: index + 1 })}
-                value={value.toString()}
-                onChangeText={(text) => {
-                  frontInputs[index] = tryParseInt(text);
-                  saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
-                }}
-                style={styles.inputSprockets}
-              />
-            );
-          })}
-        </View>
-        <View style={styles.horizontal}>
-          <FAB
-            icon="plus"
-            small
-            onPress={() => {
-              frontInputs.push(0);
-                  saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
-            }}
-          />
-          <FAB
-            icon="minus"
-            small
-            onPress={() => {
-              frontInputs.pop();
-                  saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
-            }}
-          />
+        <View style={styles.sprocketContainer}>
+          <View style={[styles.sprocketList]}>
+            {frontInputs.map((value, index) => {
+              return (
+                <TextInput
+                  key={index}
+                  mode="flat"
+                  label={t("frontSprocket", { number: index + 1 })}
+                  value={value.toString()}
+                  onChangeText={(text) => {
+                    frontInputs[index] = tryParseInt(text);
+                    saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
+                  }}
+                  style={styles.inputSprockets}
+                />
+              );
+            })}
+          </View>
+          <View style={styles.sprocketButtons}>
+            <FAB
+              icon="plus"
+              small
+              onPress={() => {
+                frontInputs.push(0);
+                    saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
+              }}
+            />
+            <FAB
+              icon="minus"
+              small
+              onPress={() => {
+                frontInputs.pop();
+                    saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
+              }}
+            />
+          </View>
         </View>
         <Divider />
         <Subheading style={styles.category}>{t("rearSprockets")}</Subheading>
-        <View style={styles.horizontal}>
-          {rearInputs.map((value, index) => {
-            return (
-              <TextInput
-                key={index}
-                mode="flat"
-                label={t("rearSprocket", { number: index + 1 })}
-                value={value.toString()}
-                onChangeText={(text) => {
-                  rearInputs[index] = tryParseInt(text);
-                  saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
-                }}
-                style={styles.inputSprockets}
-              />
-            );
-          })}
-        </View>
-        <View style={styles.horizontal}>
-          <FAB
-            icon="plus"
-            small
-            onPress={() => {
-              rearInputs.push(0);
-                  saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
-            }}
-          />
-          <FAB
-            icon="minus"
-            small
-            onPress={() => {
-              rearInputs.pop();
-              saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
-            }}
-          />
+        <View style={styles.sprocketContainer}>
+          <View style={[styles.sprocketList]}>
+            {rearInputs.map((value, index) => {
+              return (
+                <TextInput
+                  key={index}
+                  mode="flat"
+                  label={t("rearSprocket", { number: index + 1 })}
+                  value={value.toString()}
+                  onChangeText={(text) => {
+                    rearInputs[index] = tryParseInt(text);
+                    saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
+                  }}
+                  style={styles.inputSprockets}
+                />
+              );
+            })}
+          </View>
+          <View style={styles.sprocketButtons}>
+            <FAB
+              icon="plus"
+              small
+              onPress={() => {
+                rearInputs.push(0);
+                    saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
+              }}
+            />
+            <FAB
+              icon="minus"
+              small
+              onPress={() => {
+                rearInputs.pop();
+                saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
+              }}
+            />
+          </View>
         </View>
         <Divider />
-        <View style={styles.horizontal}>
+        <View style={[styles.horizontalContainer]}>
           <TextInput
             mode="flat"
             label={t("favoriteCadence")}
@@ -154,7 +158,7 @@ export function Preferences() {
             style={styles.inputGeneral}
           />
         </View>
-        <View style={styles.horizontal}>
+        <View style={[styles.horizontalContainer]}>
           <Button
             style={styles.button}
             onPress={() => {
@@ -172,13 +176,12 @@ export function Preferences() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  horizontal: {
-    justifyContent: "flex-start",
+  horizontalContainer: {
+    margin: 5,
+    alignItems: "center",
+    justifyContent: "center",
     flexDirection: "row",
-    flexWrap: "wrap",
-    marginHorizontal: 20,
-    marginVertical: 10,
-  },
+    flexWrap: "wrap",},
   inputSprockets: {
     width: "25%",
   },
@@ -186,9 +189,29 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   button: {
-    width: "40%",
+    width: "80%",
   },
   category: {
     alignSelf: "center",
   },
+  sprocketContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: "nowrap",
+    justifyContent: "center",
+  },
+  sprocketList: {
+    flex: 0.85,
+    margin: 5,
+    marginRight: 0,
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  sprocketButtons: {
+    flex: 0.15,
+    flexDirection: "column",
+    alignItems: "center",
+    marginVertical: 5,
+  }
 });

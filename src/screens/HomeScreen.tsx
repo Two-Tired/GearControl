@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { View, StyleSheet } from "react-native";
+import { ScrollView, View, StyleSheet } from "react-native";
 import { DataTable, Button, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSettings } from "../redux/settings/actions";
@@ -58,9 +58,9 @@ export function HomeScreen({ route, navigation }: Props) {
   }, locationCallback);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View>
-        <Text style={styles.riesig}>{JSON.stringify(location.coords.speed)}</Text>
+        <Text style={styles.riesig}>{JSON.stringify(location.coords.speed?.toFixed(2))}</Text>
       </View>
       <DataTable>
         <DataTable.Header>
@@ -98,15 +98,15 @@ export function HomeScreen({ route, navigation }: Props) {
       <View>
         <Text>{new Date(location.timestamp).toString() + "  " + JSON.stringify(location.coords)}</Text>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   map: {
     width: 300,
@@ -122,6 +122,6 @@ const styles = StyleSheet.create({
     width: "40%",
   },
   riesig: {
-    fontSize: 200,
+    fontSize: 100,
   },
 });
