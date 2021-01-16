@@ -45,9 +45,9 @@ export function HomeScreen({ route, navigation }: Props) {
     // dispatch(setLocation(location));
   }, []);
 
-  const locationCallback = (location) => {
-    var date = new Date(location.timestamp);
-    console.log(date.toString() + "  " + JSON.stringify(location.coords));
+  const locationCallback = (location: LocationObject) => {
+    // var date = new Date(location.timestamp);
+    // console.log(date.toString() + "  " + JSON.stringify(location.coords));
     dispatch(setLocation(location));
   }
 
