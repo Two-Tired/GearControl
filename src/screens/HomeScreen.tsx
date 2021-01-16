@@ -57,6 +57,10 @@ export function HomeScreen({ route, navigation }: Props) {
     distanceInterval: 10, // at min 10 meters between measurements
   }, locationCallback);
 
+  let testSpeeds = [1,2,3,4,5,6,7,8];
+
+
+
   return (
     <ScrollView style={styles.container}>
       <View>
@@ -64,22 +68,20 @@ export function HomeScreen({ route, navigation }: Props) {
       </View>
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title>Front \ Rear</DataTable.Title>
-          {settings.rearSprockets.map((value, index) => {
-            return <DataTable.Title key={index} numeric>{value}</DataTable.Title>;
-          })}
+          <DataTable.Title>Geschwindigkeit</DataTable.Title>
+          <DataTable.Title>Benötigte Übersetzung</DataTable.Title>
+          <DataTable.Title>Bestmögliche Übersetzung</DataTable.Title>
+          <DataTable.Title>Kettenblatt</DataTable.Title>
+          <DataTable.Title>Ritzel</DataTable.Title>
         </DataTable.Header>
-        {settings.frontSprockets.map((value, index) => {
+        {testSpeeds.map((speed, index) => {
           return (
             <DataTable.Row key={index}>
-              <DataTable.Cell key={index}>{value}</DataTable.Cell>
-              {settings.rearSprockets.map((rearValue, index) => {
-                return (
-                  <DataTable.Cell key={index} numeric>
-                    {(value / rearValue).toFixed(2)}
-                  </DataTable.Cell>
-                );
-              })}
+              <DataTable.Cell key={index}>{speed}</DataTable.Cell>
+              <DataTable.Cell key={index}>{60000 * speed/(settings.tireCircumference*settings.favoriteCadence)}</DataTable.Cell>
+              <DataTable.Cell key={index}></DataTable.Cell>
+              <DataTable.Cell key={index}></DataTable.Cell>
+              <DataTable.Cell key={index}></DataTable.Cell>
             </DataTable.Row>
           );
         })}
