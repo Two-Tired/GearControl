@@ -11,6 +11,7 @@ import { AppState, SettingsState } from "../../types";
 import { useSelector, useDispatch } from "react-redux";
 import { clearSettings, setSettings } from "../../redux/settings/actions";
 import { useTranslation } from "react-i18next";
+import { ScrollView } from "react-native";
 
 export function Preferences() {
   const settings = useSelector<AppState, SettingsState>(
@@ -40,8 +41,18 @@ export function Preferences() {
   );
   const resetSettings = () => dispatch(clearSettings());
 
+  const tryParseInt = (input: string): number => {
+    const value = parseInt(input);
+    return Number.isNaN(value) ? 0: value
+  }
+  const tryParseFloat = (input: string): number => {
+    const value = parseFloat(input);
+    return Number.isNaN(value) ? 0: value
+  }
+
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.container}>
         <Subheading style={styles.category}>{t("frontSprockets")}</Subheading>
         <View style={styles.horizontal}>
@@ -53,9 +64,10 @@ export function Preferences() {
                 label={t("frontSprocket", { number: index + 1 })}
                 value={value.toString()}
                 onChangeText={(text) => {
-                  frontInputs[index] = parseInt(text);
+                  frontInputs[index] = tryParseInt(text);
                   saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
                 }}
+                style={styles.inputSprockets}
               />
             );
           })}
@@ -89,9 +101,10 @@ export function Preferences() {
                 label={t("rearSprocket", { number: index + 1 })}
                 value={value.toString()}
                 onChangeText={(text) => {
-                  rearInputs[index] = parseInt(text);
+                  rearInputs[index] = tryParseInt(text);
                   saveSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference);
                 }}
+                style={styles.inputSprockets}
               />
             );
           })}
@@ -121,21 +134,20 @@ export function Preferences() {
             label={t("favoriteCadence")}
             value={favoriteCadence.toString()}
             onChangeText={(text) =>
-              saveSettings(frontInputs, rearInputs, parseInt(text), tireCircumference)
+              saveSettings(frontInputs, rearInputs, tryParseInt(text), tireCircumference)
             }
+            style={styles.inputGeneral}
           />
           <TextInput
             mode="flat"
-            // label={t("tireCircumference")}
-            label = "test"
+            label={t("tireCircumference")}
             value={tireCircumference.toString()}
             onChangeText={(text) =>
-              saveSettings(frontInputs, rearInputs, favoriteCadence, parseFloat(text))
+              saveSettings(frontInputs, rearInputs, favoriteCadence, tryParseFloat(text))
             }
+            style={styles.inputGeneral}
           />
         </View>
-      </View>
-      <View style={styles.bottom}>
         <View style={styles.horizontal}>
           <Button
             style={styles.button}
@@ -148,22 +160,24 @@ export function Preferences() {
           </Button>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  bottom: {
-    // flex: 1,
-    justifyContent: "flex-end",
-    marginBottom: 36,
-  },
   horizontal: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
-    margin: 20,
+    marginHorizontal: 20,
+    marginVertical: 10,
+  },
+  inputSprockets: {
+    width: "25%",
+  },
+  inputGeneral: {
+    width: "100%",
   },
   button: {
     width: "40%",
