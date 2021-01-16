@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Settings } from "react-native";
 import { DataTable, Button, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSettings } from "../redux/settings/actions";
@@ -57,9 +57,13 @@ export function HomeScreen({ route, navigation }: Props) {
     distanceInterval: 10, // at min 10 meters between measurements
   }, locationCallback);
 
+  let testSpeeds = [1,2,3,4,5,6,7,8];
+
+  
+
   return (
     <View style={styles.container}>
-      <DataTable>
+      {/* <DataTable>
         <DataTable.Header>
           <DataTable.Title>Front \ Rear</DataTable.Title>
           {settings.rearSprockets.map((value, index) => {
@@ -77,6 +81,26 @@ export function HomeScreen({ route, navigation }: Props) {
                   </DataTable.Cell>
                 );
               })}
+            </DataTable.Row>
+          );
+        })}
+      </DataTable> */}
+      <DataTable>
+        <DataTable.Header>
+          <DataTable.Title>Geschwindigkeit</DataTable.Title>
+          <DataTable.Title>Benötigte Übersetzung</DataTable.Title>
+          <DataTable.Title>Bestmögliche Übersetzung</DataTable.Title>
+          <DataTable.Title>Kettenblatt</DataTable.Title>
+          <DataTable.Title>Ritzel</DataTable.Title>
+        </DataTable.Header>
+        {testSpeeds.map((speed, index) => {
+          return (
+            <DataTable.Row key={index}>
+              <DataTable.Cell key={index}>{speed}</DataTable.Cell>
+              <DataTable.Cell key={index}>{60000 * speed/(settings.tireCircumference*settings.favoriteCadence)}</DataTable.Cell>
+              <DataTable.Cell key={index}></DataTable.Cell>
+              <DataTable.Cell key={index}></DataTable.Cell>
+              <DataTable.Cell key={index}></DataTable.Cell>
             </DataTable.Row>
           );
         })}
