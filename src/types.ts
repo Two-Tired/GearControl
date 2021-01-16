@@ -1,5 +1,6 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { LocationObject } from "expo-location"
 
 // Types for Navigation
 export type RootStackParamList = {
@@ -42,7 +43,20 @@ export type ClearSettingsActions = {
 
 export type SettingsAction = SetSettingsAction | ClearSettingsActions;
 
+// location
+export type SetLocationAction = {
+  type: string;
+  locationData: LocationObject;
+};
+
+export type SetLocationError = {
+  type: string;
+};
+
+export type LocationAction = SetLocationAction;
+
 // General App State Type
 export type AppState = {
   settings: SettingsState;
+  location: LocationObject;
 };
