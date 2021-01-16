@@ -7,12 +7,24 @@ import {
   Divider,
   Subheading,
 } from "react-native-paper";
-import { AppState, SettingsState, SETTINGS_NUMBER_TYPE, SETTINGS_SPROCKET_TYPE } from "../../types";
+import {
+  AppState,
+  SettingsState,
+  SETTINGS_NUMBER_TYPE,
+  SETTINGS_SPROCKET_TYPE,
+} from "../../types";
 import { useSelector, useDispatch } from "react-redux";
-import { clearSettings, setNumber, setSettings, setSprockets } from "../../redux/settings/actions";
+import {
+  clearSettings,
+  setNumber,
+  setSettings,
+  setSprockets,
+} from "../../redux/settings/actions";
 import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
 import { setTransmissions } from "../../redux/transmissions/actions";
+import { ThemeProvider, useTheme } from "@react-navigation/native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export function Preferences() {
   const settings = useSelector<AppState, SettingsState>(
@@ -20,6 +32,7 @@ export function Preferences() {
   );
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { colors } = useTheme();
 
   const frontInputs = settings.frontSprockets;
   const rearInputs = settings.rearSprockets;
@@ -31,38 +44,36 @@ export function Preferences() {
   const saveSettings = useCallback(
     (frontInputs, rearInputs, favoriteCadence, tireCircumference) =>
       dispatch(
-        setSettings(
-          frontInputs,
-          rearInputs,
-          favoriteCadence,
-          tireCircumference,
-        )
+        setSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference)
       ),
     [dispatch]
   );
   const saveSprockets = useCallback(
     (sprockets, sprocketType) => {
       dispatch(setSprockets(sprockets, sprocketType));
-      dispatch(setTransmissions(settings.frontSprockets, settings.rearSprockets));
-    }, [dispatch]
+      dispatch(
+        setTransmissions(settings.frontSprockets, settings.rearSprockets)
+      );
+    },
+    [dispatch]
   );
   const saveNumber = useCallback(
-    (value, numberType) => dispatch(setNumber(value, numberType)), [dispatch]
+    (value, numberType) => dispatch(setNumber(value, numberType)),
+    [dispatch]
   );
-  const resetSettings = () => {
+  const resetSettings = useCallback(() => {
     dispatch(clearSettings());
     dispatch(setTransmissions(settings.frontSprockets, settings.rearSprockets));
-  };
+  }, [dispatch]);
 
   const tryParseInt = (input: string): number => {
     const value = parseInt(input);
-    return Number.isNaN(value) ? 0: value
-  }
+    return Number.isNaN(value) ? 0 : value;
+  };
   const tryParseFloat = (input: string): number => {
     const value = parseFloat(input);
-    return Number.isNaN(value) ? 0: value
-  }
-
+    return Number.isNaN(value) ? 0 : value;
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -79,7 +90,7 @@ export function Preferences() {
                   value={value.toString()}
                   onChangeText={(text) => {
                     frontInputs[index] = tryParseInt(text);
-                    saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
+                    saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT);
                   }}
                   style={styles.inputSprockets}
                 />
@@ -92,7 +103,7 @@ export function Preferences() {
               small
               onPress={() => {
                 frontInputs.push(0);
-                    saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
+                saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT);
               }}
             />
             <FAB
@@ -100,7 +111,7 @@ export function Preferences() {
               small
               onPress={() => {
                 frontInputs.pop();
-                    saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT)
+                saveSprockets(frontInputs, SETTINGS_SPROCKET_TYPE.FRONT);
               }}
             />
           </View>
@@ -118,7 +129,7 @@ export function Preferences() {
                   value={value.toString()}
                   onChangeText={(text) => {
                     rearInputs[index] = tryParseInt(text);
-                    saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
+                    saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR);
                   }}
                   style={styles.inputSprockets}
                 />
@@ -131,7 +142,7 @@ export function Preferences() {
               small
               onPress={() => {
                 rearInputs.push(0);
-                    saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
+                saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR);
               }}
             />
             <FAB
@@ -139,7 +150,7 @@ export function Preferences() {
               small
               onPress={() => {
                 rearInputs.pop();
-                saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR)
+                saveSprockets(rearInputs, SETTINGS_SPROCKET_TYPE.REAR);
               }}
             />
           </View>
@@ -160,7 +171,10 @@ export function Preferences() {
             label={t("tireCircumference")}
             value={tireCircumference.toString()}
             onChangeText={(text) =>
-              saveNumber(tryParseFloat(text), SETTINGS_NUMBER_TYPE.CIRCUMFERENCE)
+              saveNumber(
+                tryParseFloat(text),
+                SETTINGS_NUMBER_TYPE.CIRCUMFERENCE
+              )
             }
             style={styles.inputGeneral}
           />
@@ -188,9 +202,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    flexWrap: "wrap",},
+    flexWrap: "wrap",
+  },
   inputSprockets: {
     width: "25%",
+    // marginBottom: 5,
+    // marginRight: 5,
   },
   inputGeneral: {
     width: "100%",
@@ -203,7 +220,7 @@ const styles = StyleSheet.create({
   },
   sprocketContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     flexWrap: "nowrap",
     justifyContent: "center",
   },
@@ -220,5 +237,5 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     marginVertical: 5,
-  }
+  },
 });

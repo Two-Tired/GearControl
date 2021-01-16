@@ -1,8 +1,8 @@
 import { TransmissionState, TransmissionsAction, SetTransmissionsAction } from "../../types";
 import { TRANSMISSIONS_ACTION_TYPE } from "./actions";
 
-export const initialState: TransmissionState[] = createTransmissionTable([],[]);
-const allowedSprockets = [1, 0.7, 0.6, 0.4];
+const allowedSprockets = [1, 0.7, 0.6, 0.5, 0.4]; // These are experimental values for now.
+export const initialState: TransmissionState[] = createTransmissionTable([52,39,30],[13,14,15,16,17,18,19,21,23,25]);
 
 export const transmissions = (
   state: TransmissionState[] = [ ... initialState ],
@@ -20,6 +20,7 @@ export const transmissions = (
 
 function createTransmissionTable(frontSprockets : number[], rearSprockets : number[]) {
     let table = [] as TransmissionState[];
+
     const rearSprocketKeys = Array.from(rearSprockets.keys());
     const scaledFrontSprocketKeys = scaleBetween(
       Array.from(frontSprockets.keys()),
@@ -70,7 +71,7 @@ function dist(fromArray: number[], toArray: number[]): number[][] {
 function allowed(distArray: number[][]): number[][]{
   distArray.map((value, key) => {
       const max = Math.max.apply(Math, value);
-      value.map((valueInner, keyInner) => {
+      value.map((_, keyInner) => {
           distArray[key][keyInner] = parseFloat((distArray[key][keyInner] / max).toFixed(2)) <= allowedSprockets[distArray.length - 1] ? 1 : 0;
       });
     });

@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { HomeScreenNavigationProp, HomeScreenRouteProp } from "../types";
 
 type Props = {
-    navigation: HomeScreenNavigationProp;
-    previous: HomeScreenRouteProp;
+  navigation: HomeScreenNavigationProp;
+  previous: HomeScreenRouteProp;
 };
 
 export function CustomNavigationBar({ navigation, previous }: Props) {
