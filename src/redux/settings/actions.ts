@@ -1,5 +1,4 @@
 import { ClearSettingsActions as ClearSettingsAction, SetNumberAction, SetSettingsAction, SetSprocketAction, SETTINGS_NUMBER_TYPE, SETTINGS_SPROCKET_TYPE } from "../../types";
-import { settings } from "./reducer";
 
 export enum SETTINGS_ACTION_TYPE {
   SET_SETTINGS = "SETTINGS/SET_SETTINGS",

@@ -65,7 +65,7 @@ export type SetNumberAction = {
 
 export type SettingsAction = SetSettingsAction | ClearSettingsActions;
 
-// location
+// location actions
 export type SetLocationAction = {
   type: string;
   locationData: LocationObject;
@@ -77,8 +77,30 @@ export type SetLocationError = {
 
 export type LocationAction = SetLocationAction;
 
+// transmissions types
+export type TransmissionState = {
+  frontSprocket: number;
+  rearSprocket: number;
+  transmission: number;
+  validity: number;
+}
+
+// transmissions actions
+export type TransmissionsAction = SetTransmissionsAction;
+
+export type SetTransmissionsAction = {
+  type: string;
+  sprocketData: SproketCounts;
+}
+
+export type SproketCounts = {
+  sprocketsFront: number[];
+  sprocketsRear: number[];
+}
+
 // General App State Type
 export type AppState = {
   settings: SettingsState;
   location: LocationObject;
+  transmissions: TransmissionState[];
 };

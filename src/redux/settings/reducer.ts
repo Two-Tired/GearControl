@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import { SetNumberAction, SetSettingsAction, SetSprocketAction, SettingsAction, SettingsState, SETTINGS_NUMBER_TYPE, SETTINGS_SPROCKET_TYPE } from "../../types";
+import { AppState, SetNumberAction, SetSettingsAction, SetSprocketAction, SettingsAction, SettingsState, SETTINGS_NUMBER_TYPE, SETTINGS_SPROCKET_TYPE } from "../../types";
 import { SETTINGS_ACTION_TYPE } from "./actions";
 
 export const initialState: SettingsState = {
@@ -15,7 +15,7 @@ const clearAsyncStorage = async() => {
 
 export const settings = (
   state: SettingsState = JSON.parse(JSON.stringify(initialState)),
-  action: SettingsAction
+  action: SettingsAction,
 ) => {
   switch (action.type) {
     case SETTINGS_ACTION_TYPE.SET_SETTINGS:

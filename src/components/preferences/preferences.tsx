@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearSettings, setNumber, setSettings, setSprockets } from "../../redux/settings/actions";
 import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
+import { setTransmissions } from "../../redux/transmissions/actions";
 
 export function Preferences() {
   const settings = useSelector<AppState, SettingsState>(
@@ -40,12 +41,18 @@ export function Preferences() {
     [dispatch]
   );
   const saveSprockets = useCallback(
-    (sprockets, sprocketType) => dispatch(setSprockets(sprockets, sprocketType)), [dispatch]
+    (sprockets, sprocketType) => {
+      dispatch(setSprockets(sprockets, sprocketType));
+      dispatch(setTransmissions(settings.frontSprockets, settings.rearSprockets));
+    }, [dispatch]
   );
   const saveNumber = useCallback(
     (value, numberType) => dispatch(setNumber(value, numberType)), [dispatch]
   );
-  const resetSettings = () => dispatch(clearSettings());
+  const resetSettings = () => {
+    dispatch(clearSettings());
+    dispatch(setTransmissions(settings.frontSprockets, settings.rearSprockets));
+  };
 
   const tryParseInt = (input: string): number => {
     const value = parseInt(input);
