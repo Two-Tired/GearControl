@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTheme } from "@react-navigation/native";
-import Svg, { SvgProps, Path } from "react-native-svg";
+import Svg, { SvgProps, Path, Text } from "react-native-svg";
 import { Dimensions } from "react-native";
 
 const window = Dimensions.get("window");
@@ -23,17 +23,18 @@ function BigSprocket(props: SvgProps) {
         fill={colors.primary}
         strokeWidth={0.4}
         strokeLinejoin="round"
-        stroke="#000"
+        // stroke="#000"
         strokeMiterlimit={10}
       />
-      <text
+      <Text
         x="196.91811"
         y="246.55956"
         id="frontSprocket"
-        fontSize="90"
+        fill={colors.primary}
+        fontSize="100"
         fontWeight="bold">
         2
-      </text>
+      </Text>
     </Svg>
   );
 }

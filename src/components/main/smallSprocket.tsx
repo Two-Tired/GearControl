@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Svg, { SvgProps, Path } from "react-native-svg";
+import Svg, { SvgProps, Path, Text } from "react-native-svg";
 import { Dimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
@@ -23,17 +23,18 @@ function SmallSprocket(props: SvgProps) {
         fill={colors.primary}
         strokeWidth={0.4}
         strokeLinejoin="round"
-        stroke="#000"
+        // stroke="#000"
         strokeMiterlimit={10}
       />
-      <text
+      <Text
         x="139.94492"
         y="192.59746"
         id="rearSprocket"
-        fontSize="90"
+        fill={colors.primary}
+        fontSize="100"
         fontWeight="bold">
-        6
-      </text>
+        7
+      </Text>
     </Svg>
   );
 }

@@ -68,14 +68,14 @@ export function HomeScreen({ route, navigation }: Props) {
 
   return (
     <ScrollView style={styles.container}>
-      <View>
-        <Text style={styles.riesig}>{JSON.stringify(location.coords.speed?.toFixed(2))}</Text>
-        <Text>{new Date(location.timestamp).toString() + "  " + JSON.stringify(location.coords)}</Text>
-      </View>
       <View style={styles.horizontal}>
         <BigSprocket />
         <View style={styles.horizontalSpace}/>
         <SmallSprocket />
+      </View>
+      <View>
+        <Text style={styles.riesig}>{location.coords.speed?.toFixed(2)}</Text>
+        <Text>{new Date(location.timestamp).toString() + "  " + JSON.stringify(location.coords)}</Text>
       </View>
       <View style={styles.horizontal}>
         <Button
