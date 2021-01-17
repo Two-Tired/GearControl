@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, View, StyleSheet, Dimensions, Platform } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSettings } from "../redux/settings/actions";
 import { setLocation, setLocationError } from "../redux/location/actions";
@@ -36,9 +36,10 @@ export function HomeScreen({ route, navigation }: Props) {
     (store) => store.transmissions
   );
 
+  const {colors} = useTheme()
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
   const resetSettings = () => dispatch(clearSettings());
 
   useEffect(() => {
@@ -67,11 +68,15 @@ export function HomeScreen({ route, navigation }: Props) {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.horizontal}>
+      <View style={styles.gearContainer}>
         <BigSprocket />
-        <View style={styles.horizontalSpace} />
+        <View style={styles.horizontalSpace}>
+          <Text style={[styles.speed]}>27,3</Text>
+          <Text style={[styles.speedUnit]}>km/h</Text>
+        </View>
         <SmallSprocket />
       </View>
+      <View style={styles.mapContainer}>
       {Platform.OS === 'web' ? null : (
         <MapView style={styles.map}
           showsUserLocation={true}
@@ -83,7 +88,9 @@ export function HomeScreen({ route, navigation }: Props) {
           }}
         /> )
       }
-      <View style={styles.horizontal}>
+      </View>
+      
+      {/* <View style={styles.horizontal}>
         <Button
           style={styles.button}
           onPress={() => {
@@ -97,7 +104,7 @@ export function HomeScreen({ route, navigation }: Props) {
       <View>
         <Text style={styles.riesig}>{location.coords.speed?.toFixed(2)}</Text>
         <Text>{new Date(location.timestamp).toString() + "  " + JSON.stringify(location.coords)}</Text>
-      </View>
+      </View> */}
     </ScrollView>
   );
 }
@@ -105,26 +112,36 @@ export function HomeScreen({ route, navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
     // alignItems: "center",
     // justifyContent: "center",
   },
-  horizontal: {
+  gearContainer: {
     justifyContent: "center",
     flexDirection: "row",
     flexWrap: "wrap",
-    margin: 20,
+    margin: 10,
+  },
+  mapContainer: {
   },
   button: {
     width: "40%",
   },
-  riesig: {
-    fontSize: 100,
+  speed: {
+    fontSize: 30,
+    color: "#007aff",
+  },
+  speedUnit: {
+    fontSize: 15,
+    color: "#007aff",
   },
   horizontalSpace: {
-    width: 100,
+    width: "30%",
+    justifyContent: "center",
+    alignItems: "center"
   },
   map: {
+    height: (Dimensions.get("window").height)*0.69,
     width: Dimensions.get('window').width,
-    height: 355,
   },
 });
