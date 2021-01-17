@@ -10,6 +10,7 @@ import { DefaultTheme as PaperDefaultTheme, DarkTheme as PaperDarkTheme, Provide
 import { CustomNavigationBar } from "./src/components/CustomNavigationBar";
 import { PersistGate } from "redux-persist/integration/react";
 import "./src/localization";
+import { GearTableScreen } from "./src/screens/GearTableScreen";
 
 const RootStack = createStackNavigator<RootStackParamList>();
 
@@ -61,6 +62,10 @@ export default function App() {
               <RootStack.Screen
                 name="Preferences"
                 component={PreferencesScreen}
+              ></RootStack.Screen>
+              <RootStack.Screen
+                name="GearTable"
+                component={GearTableScreen}
               ></RootStack.Screen>
             </RootStack.Navigator>
           </NavigationContainer>

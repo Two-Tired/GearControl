@@ -33,6 +33,13 @@ export function CustomNavigationBar({ navigation, previous }: Props) {
             }}
             title={t("preferences")}
           />
+          <Menu.Item
+            onPress={() => {
+              navigation.navigate("GearTable");
+              setVisible(false);
+            }}
+            title={t("gearTable")}
+          />
         </Menu>
       ) : null}
     </Appbar.Header>

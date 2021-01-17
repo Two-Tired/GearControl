@@ -8,4 +8,10 @@ export default {
   preferences: "Preferences",
   test: "test",
   reset: "Reset",
+  speed: "Speed [km/h]",
+  transmissionTarget: "Target transmission",
+  transmissionBest: "Best possible transmission",
+  cadenceActual: "Actual cadence [rpm]",
+  cadenceDifference: "Difference to facorite cadence [rmp]",
+  gearTable: "Tabular View",
 };

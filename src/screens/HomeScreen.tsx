@@ -66,39 +66,39 @@ export function HomeScreen({ route, navigation }: Props) {
     distanceInterval: 10, // at min 10 meters between measurements
   }, locationCallback);
 
-  const closestIndex = (num : number , arr : number[]) => {
-    let curr = arr[0], diff = Math.abs(num - curr);
-    let index = 0;
-    for (let val = 0; val < arr.length; val++) {
-       let newdiff = Math.abs(num - arr[val]);
-       if (newdiff < diff) {
-          diff = newdiff;
-          curr = arr[val];
-          index = val;
-       };
-    };
-    return index;
- };
+//   const closestIndex = (num : number , arr : number[]) => {
+//     let curr = arr[0], diff = Math.abs(num - curr);
+//     let index = 0;
+//     for (let val = 0; val < arr.length; val++) {
+//        let newdiff = Math.abs(num - arr[val]);
+//        if (newdiff < diff) {
+//           diff = newdiff;
+//           curr = arr[val];
+//           index = val;
+//        };
+//     };
+//     return index;
+//  };
 
-  function createTestTable(testSpeeds : number[]) {
-    if (transmissions.length == 0)
-      return [];
-    let table = [];
-    testSpeeds.map((speed, index) => {
-      let currRow = {};
-      currRow.speed = speed;
-      currRow.transmissionNeeded = 60000 * speed/(settings.tireCircumference*settings.favoriteCadence);
+//   function createTestTable(testSpeeds : number[]) {
+//     if (transmissions.length == 0)
+//       return [];
+//     let table = [];
+//     testSpeeds.map((speed, index) => {
+//       let currRow = {};
+//       currRow.speed = speed;
+//       currRow.transmissionNeeded = 60000 * speed/(settings.tireCircumference*settings.favoriteCadence);
 
-      let bestIndex = closestIndex(currRow.transmissionNeeded, transmissions.map(a => a.transmission));
-      currRow.transmissionBest = transmissions[bestIndex].transmission;
-      currRow.sprocketFront = transmissions[bestIndex].frontSprocket;
-      currRow.sprocketRear = transmissions[bestIndex].rearSprocket;
-      table.push(currRow);
-    });
-    return table;
-  }
+//       let bestIndex = closestIndex(currRow.transmissionNeeded, transmissions.map(a => a.transmission));
+//       currRow.transmissionBest = transmissions[bestIndex].transmission;
+//       currRow.sprocketFront = transmissions[bestIndex].frontSprocket;
+//       currRow.sprocketRear = transmissions[bestIndex].rearSprocket;
+//       table.push(currRow);
+//     });
+//     return table;
+//   }
 
-  let testTable = createTestTable([1,2,3,4,5,6,7,8, 9, 10]);
+//   let testTable = createTestTable([1,2,3,4,5,6,7,8, 9, 10]);
   // let testTable = [];
 
   return (
@@ -106,7 +106,7 @@ export function HomeScreen({ route, navigation }: Props) {
       <View>
         <Text style={styles.riesig}>{JSON.stringify(location.coords.speed?.toFixed(2))}</Text>
       </View>
-      <DataTable>
+      {/* <DataTable>
         <DataTable.Header>
           <DataTable.Title>Geschwindigkeit</DataTable.Title>
           <DataTable.Title>Benötigte Übersetzung</DataTable.Title>
@@ -131,7 +131,7 @@ export function HomeScreen({ route, navigation }: Props) {
             </DataTable.Row>
           );
         })}
-      </DataTable>
+      </DataTable> */}
       <View style={styles.horizontal}>
         <Button
           style={styles.button}

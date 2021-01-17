@@ -6,6 +6,7 @@ import { LocationObject } from "expo-location"
 export type RootStackParamList = {
   Home: undefined;
   Preferences: undefined;
+  GearTable: undefined;
 };
 
 export type HomeScreenNavigationProp = StackNavigationProp<
@@ -15,6 +16,10 @@ export type HomeScreenNavigationProp = StackNavigationProp<
 export type PreferencesScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "Preferences"
+>;
+export type GearTableScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "GearTable"
 >;
 
 export type HomeScreenRouteProp = RouteProp<RootStackParamList, "Home">;

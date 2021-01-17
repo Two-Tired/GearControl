@@ -8,4 +8,10 @@ export default {
   preferences: "Einstellungen",
   test: "test",
   reset: "Zurücksetzen",
+  speed: "Geschwindigkeit [km/h]",
+  transmissionTarget: "Soll-Übersetzung",
+  transmissionBest: "Bestmögliche Übersetzung",
+  cadenceActual: "Tatsächliche Trittfrequenz [U/min]",
+  cadenceDifference: "Abweichung von gewünschter Trittfrequenz [U/min]",
+  gearTable: "Tabellarische Ansicht",
 };

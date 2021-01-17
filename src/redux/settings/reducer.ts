@@ -5,7 +5,7 @@ import { SETTINGS_ACTION_TYPE } from "./actions";
 export const initialState: SettingsState = {
   frontSprockets: [52,39,30],
   rearSprockets: [13,14,15,16,17,18,19,21,23,25],
-  favoriteCadence: 100, // revolutions per minute
+  favoriteCadence: 70, // revolutions per minute
   tireCircumference: 2150, // mm
 };
 
