@@ -66,72 +66,17 @@ export function HomeScreen({ route, navigation }: Props) {
     distanceInterval: 10, // at min 10 meters between measurements
   }, locationCallback);
 
-//   const closestIndex = (num : number , arr : number[]) => {
-//     let curr = arr[0], diff = Math.abs(num - curr);
-//     let index = 0;
-//     for (let val = 0; val < arr.length; val++) {
-//        let newdiff = Math.abs(num - arr[val]);
-//        if (newdiff < diff) {
-//           diff = newdiff;
-//           curr = arr[val];
-//           index = val;
-//        };
-//     };
-//     return index;
-//  };
-
-//   function createTestTable(testSpeeds : number[]) {
-//     if (transmissions.length == 0)
-//       return [];
-//     let table = [];
-//     testSpeeds.map((speed, index) => {
-//       let currRow = {};
-//       currRow.speed = speed;
-//       currRow.transmissionNeeded = 60000 * speed/(settings.tireCircumference*settings.favoriteCadence);
-
-//       let bestIndex = closestIndex(currRow.transmissionNeeded, transmissions.map(a => a.transmission));
-//       currRow.transmissionBest = transmissions[bestIndex].transmission;
-//       currRow.sprocketFront = transmissions[bestIndex].frontSprocket;
-//       currRow.sprocketRear = transmissions[bestIndex].rearSprocket;
-//       table.push(currRow);
-//     });
-//     return table;
-//   }
-
-//   let testTable = createTestTable([1,2,3,4,5,6,7,8, 9, 10]);
-  // let testTable = [];
-
   return (
     <ScrollView style={styles.container}>
       <View>
         <Text style={styles.riesig}>{JSON.stringify(location.coords.speed?.toFixed(2))}</Text>
+        <Text>{new Date(location.timestamp).toString() + "  " + JSON.stringify(location.coords)}</Text>
       </View>
-      {/* <DataTable>
-        <DataTable.Header>
-          <DataTable.Title>Geschwindigkeit</DataTable.Title>
-          <DataTable.Title>Benötigte Übersetzung</DataTable.Title>
-          <DataTable.Title>Bestmögliche Übersetzung</DataTable.Title>
-          <DataTable.Title>Kettenblatt</DataTable.Title>
-          <DataTable.Title>Ritzel</DataTable.Title>
-          <DataTable.Title>Tatsächliche Trittfrequenz</DataTable.Title>
-          <DataTable.Title>Abweichung Trittfrequenz</DataTable.Title>
-        </DataTable.Header>
-        {testTable.map((row, index) => {
-            const actualCadence = row.speed / settings.tireCircumference / row.transmissionBest * 60000;
-
-          return (
-            <DataTable.Row key={index}>
-              <DataTable.Cell key={index}>{row.speed * 3.6}</DataTable.Cell>
-              <DataTable.Cell key={index+1}>{row.transmissionNeeded}</DataTable.Cell>
-              <DataTable.Cell key={index+2}>{row.transmissionBest}</DataTable.Cell>
-              <DataTable.Cell key={index+3}>{row.sprocketFront}</DataTable.Cell>
-              <DataTable.Cell key={index+4}>{row.sprocketRear}</DataTable.Cell>
-              <DataTable.Cell key={index+5}>{actualCadence.toFixed(2)}</DataTable.Cell>
-              <DataTable.Cell key={index+6}>{(settings.favoriteCadence - actualCadence).toFixed(2)}</DataTable.Cell>
-            </DataTable.Row>
-          );
-        })}
-      </DataTable> */}
+      <View style={styles.horizontal}>
+        <BigSprocket />
+        <View style={styles.horizontalSpace}/>
+        <SmallSprocket />
+      </View>
       <View style={styles.horizontal}>
         <Button
           style={styles.button}
@@ -142,13 +87,6 @@ export function HomeScreen({ route, navigation }: Props) {
         >
           {t("reset")}
         </Button>
-      </View>
-      <View>
-        <Text>{new Date(location.timestamp).toString() + "  " + JSON.stringify(location.coords)}</Text>
-      </View>
-      <View style={styles.horizontal}>
-        <BigSprocket />
-        <SmallSprocket />
       </View>
     </ScrollView>
   );
@@ -176,4 +114,7 @@ const styles = StyleSheet.create({
   riesig: {
     fontSize: 100,
   },
+  horizontalSpace: {
+    width: 100,
+  }
 });
