@@ -45,6 +45,14 @@ export type SettingsState = {
   tireCircumference: number;
 };
 
+// transmissions types
+export type TransmissionState = {
+  frontSprocket: number;
+  rearSprocket: number;
+  transmission: number;
+  validity: number;
+};
+
 // Types for Actions
 export type SetSettingsAction = {
   type: string;
@@ -91,22 +99,6 @@ export type SetLocationError = {
 
 export type LocationAction = SetLocationAction;
 
-// transmissions types
-export type TransmissionState = {
-  frontSprocket: number;
-  rearSprocket: number;
-  transmission: number;
-  validity: number;
-};
-
-// transmissions actions
-export type TransmissionsAction = SetTransmissionsAction;
-
-export type SetTransmissionsAction = {
-  type: string;
-  sprocketData: SproketCounts;
-};
-
 export type SproketCounts = {
   sprocketsFront: number[];
   sprocketsRear: number[];
@@ -116,7 +108,6 @@ export type SproketCounts = {
 export type AppState = {
   settings: SettingsState;
   location: LocationObject;
-  transmissions: TransmissionState[];
 };
 
 export type MapRegion = {

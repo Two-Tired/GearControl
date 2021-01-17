@@ -1,7 +1,6 @@
 import { combineReducers, createStore } from "redux";
 import { settings } from "./settings/reducer";
 import { location } from "./location/reducer";
-import { transmissions } from "./transmissions/reducer";
 import { persistStore, persistReducer } from "redux-persist";
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -15,7 +14,6 @@ const persistedReducer = persistReducer(
   combineReducers({
     settings,
     location,
-    transmissions,
   })
 );
 

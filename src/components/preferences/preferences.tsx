@@ -23,7 +23,6 @@ import {
 } from "../../redux/settings/actions";
 import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
-import { setTransmissions } from "../../redux/transmissions/actions";
 import { useTheme } from "@react-navigation/native";
 
 export function Preferences() {
@@ -41,19 +40,9 @@ export function Preferences() {
   const favoriteCadence = settings.favoriteCadence;
   const tireCircumference = settings.tireCircumference;
 
-  const saveSettings = useCallback(
-    (frontInputs, rearInputs, favoriteCadence, tireCircumference) =>
-      dispatch(
-        setSettings(frontInputs, rearInputs, favoriteCadence, tireCircumference)
-      ),
-    [dispatch]
-  );
   const saveSprockets = useCallback(
     (sprockets, sprocketType) => {
       dispatch(setSprockets(sprockets, sprocketType));
-      dispatch(
-        setTransmissions(settings.frontSprockets, settings.rearSprockets)
-      );
     },
     [dispatch]
   );
@@ -63,7 +52,6 @@ export function Preferences() {
   );
   const resetSettings = useCallback(() => {
     dispatch(clearSettings());
-    dispatch(setTransmissions(settings.frontSprockets, settings.rearSprockets));
   }, [dispatch]);
 
   const tryParseInt = (input: string): number => {

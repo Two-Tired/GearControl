@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import { AppState, SetNumberAction, SetSettingsAction, SetSprocketAction, SettingsAction, SettingsState, SETTINGS_NUMBER_TYPE, SETTINGS_SPROCKET_TYPE } from "../../types";
+import { AppState, SetNumberAction, SetSettingsAction, SetSprocketAction, SettingsAction, SettingsState, SETTINGS_NUMBER_TYPE, SETTINGS_SPROCKET_TYPE, TransmissionState } from "../../types";
 import { SETTINGS_ACTION_TYPE } from "./actions";
 
 export const initialState: SettingsState = {
@@ -29,12 +29,13 @@ export const settings = (
       switch(sprocketType) {
         case SETTINGS_SPROCKET_TYPE.FRONT:
           state.frontSprockets = [...sprockets];
-          return {...state};
+          break;
         case SETTINGS_SPROCKET_TYPE.REAR:
           state.rearSprockets = [...sprockets];
-          return {...state};
+          break;
       }
-    case SETTINGS_ACTION_TYPE.SET_NUMBER:
+      return {...state};
+      case SETTINGS_ACTION_TYPE.SET_NUMBER:
       const{numberType, value} = <SetNumberAction>action;
       switch (numberType) {
         case SETTINGS_NUMBER_TYPE.CADENCE:
@@ -48,3 +49,7 @@ export const settings = (
       return state;
   }
 };
+
+
+
+
