@@ -26,8 +26,17 @@ function BigSprocket(props: SvgProps) {
         stroke="#000"
         strokeMiterlimit={10}
       />
+      <text
+        x="196.91811"
+        y="246.55956"
+        id="frontSprocket"
+        fontSize="90"
+        fontWeight="bold">
+        2
+      </text>
     </Svg>
   );
 }
+
 
 export default BigSprocket;
