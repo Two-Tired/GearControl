@@ -24,7 +24,7 @@ export function ImpressumScreen() {
             <View style={styles.horizontal}>
                 <View style={styles.container} >
                     <Avatar.Image size={96} source={require('../assets/leo.png')} />
-                    <Caption>Leonardt Mandtler</Caption>
+                    <Caption>Leonard Mandtler</Caption>
                 </View>
                 <View style={styles.container}>
                     <Avatar.Image size={96} source={require('../assets/axel.png')} />
