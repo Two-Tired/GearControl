@@ -9,17 +9,18 @@ type Props = {
 };
 
 export function CustomNavigationBar({ navigation, previous }: Props) {
+  const { t } = useTranslation();
+
   const [visible, setVisible] = React.useState(false);
   const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
-  const { t } = useTranslation();
+  const closeMenu = () => setVisible(false);  
 
   return (
     <Appbar.Header>
       {previous ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
-      <Appbar.Content title="Two-Tired" />
-      {!previous ? (
-        <Menu
+      <Appbar.Content title={t("appName")} />
+      {/* {!previous ? ( */}
+        <Menu 
           visible={visible}
           onDismiss={closeMenu}
           anchor={
@@ -40,8 +41,15 @@ export function CustomNavigationBar({ navigation, previous }: Props) {
             }}
             title={t("gearTable")}
           />
+          <Menu.Item
+            onPress={() => {
+              navigation.navigate("Impressum");
+              setVisible(false);
+            }}
+            title={t("impressum")}
+          />
         </Menu>
-      ) : null}
+      {/* ) : null} */}
     </Appbar.Header>
   );
 }

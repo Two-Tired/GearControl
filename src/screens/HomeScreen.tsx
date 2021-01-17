@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, View, StyleSheet } from "react-native";
-import { DataTable, Button, Text } from "react-native-paper";
+import { ScrollView, View, StyleSheet, Dimensions, Platform } from "react-native";
+import { Button, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSettings } from "../redux/settings/actions";
 import { setLocation, setLocationError } from "../redux/location/actions";
@@ -12,11 +12,10 @@ import {
   AppState,
   TransmissionState,
 } from "../types";
-
+import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { LocationObject } from "expo-location";
-import { setTransmissions } from "../redux/transmissions/actions";
 import BigSprocket from "../components/main/bigSprocket";
 import SmallSprocket from "../components/main/smallSprocket";
 
@@ -26,7 +25,7 @@ type Props = {
 };
 
 export function HomeScreen({ route, navigation }: Props) {
-  
+
   const settings = useSelector<AppState, SettingsState>(
     (store) => store.settings
   );
@@ -70,13 +69,20 @@ export function HomeScreen({ route, navigation }: Props) {
     <ScrollView style={styles.container}>
       <View style={styles.horizontal}>
         <BigSprocket />
-        <View style={styles.horizontalSpace}/>
+        <View style={styles.horizontalSpace} />
         <SmallSprocket />
       </View>
-      <View>
-        <Text style={styles.riesig}>{location.coords.speed?.toFixed(2)}</Text>
-        <Text>{new Date(location.timestamp).toString() + "  " + JSON.stringify(location.coords)}</Text>
-      </View>
+      {Platform.OS === 'web' ? null : (
+        <MapView style={styles.map}
+          showsUserLocation={true}
+          initialRegion={{
+            longitude: 7,
+            latitude: 50.8,
+            longitudeDelta: 0.0922,
+            latitudeDelta: 0.0922,
+          }}
+        /> )
+      }
       <View style={styles.horizontal}>
         <Button
           style={styles.button}
@@ -88,6 +94,10 @@ export function HomeScreen({ route, navigation }: Props) {
           {t("reset")}
         </Button>
       </View>
+      <View>
+        <Text style={styles.riesig}>{location.coords.speed?.toFixed(2)}</Text>
+        <Text>{new Date(location.timestamp).toString() + "  " + JSON.stringify(location.coords)}</Text>
+      </View>
     </ScrollView>
   );
 }
@@ -97,10 +107,6 @@ const styles = StyleSheet.create({
     flex: 1,
     // alignItems: "center",
     // justifyContent: "center",
-  },
-  map: {
-    width: 300,
-    height: 200,
   },
   horizontal: {
     justifyContent: "center",
@@ -116,5 +122,9 @@ const styles = StyleSheet.create({
   },
   horizontalSpace: {
     width: 100,
-  }
+  },
+  map: {
+    width: Dimensions.get('window').width,
+    height: 355,
+  },
 });

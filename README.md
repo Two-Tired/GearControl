@@ -43,3 +43,8 @@ yarn android
 * React Localization: https://medium.com/cybermonkey/multiple-language-support-in-react-native-part-1-fa6966b62332
 * React Persist: https://github.com/rt2zz/redux-persist#storage-engines
 * Convert SVG to React Component: https://react-svgr.com/playground/?native=true&typescript=true
+
+
+# Avatars:
+* Leo: https://getavataaars.com/?accessoriesType=Blank&avatarStyle=Circle&clotheColor=Red&clotheType=Hoodie&eyeType=Wink&facialHairType=BeardLight&mouthType=Default&skinColor=Light&topType=ShortHairShortCurly
+* Axel: https://getavataaars.com/?accessoriesType=Blank&avatarStyle=Circle&clotheColor=Blue03&clotheType=ShirtCrewNeck&eyeType=Default&facialHairType=Blank&hairColor=Blonde&mouthType=Smile&skinColor=Light&topType=ShortHairShortFlat

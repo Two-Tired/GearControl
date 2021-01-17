@@ -1,4 +1,6 @@
 export default {
+  appName: "GearControl",
+  appDescription: "The app for everyone who does not want to be Too-Tired when being Two-Tired!",
   rearSprocket: "Sprocket {{number}}",
   frontSprocket: "Sprocket {{number}}",
   rearSprockets: "Rear Sprockets",
@@ -14,4 +16,8 @@ export default {
   cadenceActual: "Actual cadence [rpm]",
   cadenceDifference: "Difference to facorite cadence [rmp]",
   gearTable: "Tabular View",
+  impressum: "Imprint",
+  quote: "Work simplification, convenience and the strive for perfection are the motivating factors for most discoveries and inventions.",
+  team: "Our Team",
+  teamDescription: "We at 'Two-Tired' are two friends from the region around Cologne-Bonn (GER) who have fun with and while programming.",
 };

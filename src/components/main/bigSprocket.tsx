@@ -33,7 +33,7 @@ function BigSprocket(props: SvgProps) {
         fill={colors.primary}
         fontSize="100"
         fontWeight="bold">
-        2
+        3
       </Text>
     </Svg>
   );

@@ -11,6 +11,12 @@ export const setLocation = (
 ): SetLocationAction => ({
   type: LOCATION_ACTION_TYPES.SET_LOCATION,
   locationData: location,
+  // mapRegion: {
+  //   longitude: location.coords.longitude,
+  //   latitude: location.coords.latitude,
+  //   longitudeDelta: 0.0992,
+  //   latitudeDelta: 0.0992,
+  // }
 });
 
 export const setLocationError = (): SetLocationError => ({

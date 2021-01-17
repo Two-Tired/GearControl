@@ -7,6 +7,7 @@ export type RootStackParamList = {
   Home: undefined;
   Preferences: undefined;
   GearTable: undefined;
+  Impressum: undefined;
 };
 
 export type HomeScreenNavigationProp = StackNavigationProp<
@@ -20,6 +21,10 @@ export type PreferencesScreenNavigationProp = StackNavigationProp<
 export type GearTableScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "GearTable"
+>;
+export type ImpressumScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Impressum"
 >;
 
 export type HomeScreenRouteProp = RouteProp<RootStackParamList, "Home">;
@@ -106,3 +111,10 @@ export type AppState = {
   location: LocationObject;
   transmissions: TransmissionState[];
 };
+
+export type MapRegion = {
+  latitude: number,
+  longitude: number,
+  latitudeDelta: number,
+  longitudeDelta: number,
+}

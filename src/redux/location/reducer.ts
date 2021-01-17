@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-community/async-storage";
 import { SetLocationAction, LocationAction } from "../../types";
 import { LocationObject } from "expo-location"
 import { LOCATION_ACTION_TYPES } from "./actions";
@@ -36,7 +35,7 @@ export const location = (
   switch (action.type) {
     case LOCATION_ACTION_TYPES.SET_LOCATION:
       const { locationData } = <SetLocationAction>action;
-
+      
       return { ...locationData };
     case LOCATION_ACTION_TYPES.LOCATION_ERROR:
       return { ...errorState};
