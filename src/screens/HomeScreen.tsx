@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, View, StyleSheet, Dimensions, Platform } from "react-native";
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  Dimensions,
+  Platform,
+} from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSettings } from "../redux/settings/actions";
@@ -12,9 +18,9 @@ import {
   AppState,
   TransmissionState,
 } from "../types";
-import MapView from 'react-native-maps';
-import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
+import MapView from "react-native-maps";
+import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
 import { LocationObject } from "expo-location";
 import BigSprocket from "../components/main/bigSprocket";
 import SmallSprocket from "../components/main/smallSprocket";
@@ -25,7 +31,6 @@ type Props = {
 };
 
 export function HomeScreen({ route, navigation }: Props) {
-
   const settings = useSelector<AppState, SettingsState>(
     (store) => store.settings
   );
@@ -36,7 +41,7 @@ export function HomeScreen({ route, navigation }: Props) {
     (store) => store.transmissions
   );
 
-  const {colors} = useTheme()
+  const { colors } = useTheme();
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -45,7 +50,7 @@ export function HomeScreen({ route, navigation }: Props) {
   useEffect(() => {
     (async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
-      if (status !== 'granted') {
+      if (status !== "granted") {
         dispatch(setLocationError());
       }
     })();
@@ -58,13 +63,16 @@ export function HomeScreen({ route, navigation }: Props) {
     // var date = new Date(location.timestamp);
     // console.log(date.toString() + "  " + JSON.stringify(location.coords));
     dispatch(setLocation(location));
-  }
+  };
 
-  Location.watchPositionAsync({
-    accuracy: Location.Accuracy.Lowest,
-    timeInterval: 5000, // at min 5 sec between measurements
-    distanceInterval: 10, // at min 10 meters between measurements
-  }, locationCallback);
+  Location.watchPositionAsync(
+    {
+      accuracy: Location.Accuracy.Lowest,
+      timeInterval: 5000, // at min 5 sec between measurements
+      distanceInterval: 10, // at min 10 meters between measurements
+    },
+    locationCallback
+  );
 
   return (
     <ScrollView style={styles.container}>
@@ -77,19 +85,20 @@ export function HomeScreen({ route, navigation }: Props) {
         <SmallSprocket />
       </View>
       <View style={styles.mapContainer}>
-      {Platform.OS === 'web' ? null : (
-        <MapView style={styles.map}
-          showsUserLocation={true}
-          initialRegion={{
-            longitude: 7,
-            latitude: 50.8,
-            longitudeDelta: 0.0922,
-            latitudeDelta: 0.0922,
-          }}
-        /> )
-      }
+        {Platform.OS === "web" ? null : (
+          <MapView
+            style={styles.map}
+            showsUserLocation={true}
+            initialRegion={{
+              longitude: 7,
+              latitude: 50.8,
+              longitudeDelta: 0.0922,
+              latitudeDelta: 0.0922,
+            }}
+          />
+        )}
       </View>
-      
+
       {/* <View style={styles.horizontal}>
         <Button
           style={styles.button}
@@ -122,8 +131,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     margin: 10,
   },
-  mapContainer: {
-  },
+  mapContainer: {},
   button: {
     width: "40%",
   },
@@ -138,10 +146,10 @@ const styles = StyleSheet.create({
   horizontalSpace: {
     width: "30%",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   map: {
-    height: (Dimensions.get("window").height)*0.69,
-    width: Dimensions.get('window').width,
+    height: Dimensions.get("window").height * 0.69,
+    width: Dimensions.get("window").width,
   },
 });

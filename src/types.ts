@@ -1,6 +1,6 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { LocationObject } from "expo-location"
+import { LocationObject } from "expo-location";
 
 // Types for Navigation
 export type RootStackParamList = {
@@ -9,6 +9,13 @@ export type RootStackParamList = {
   GearTable: undefined;
   Impressum: undefined;
 };
+
+export enum SCREEN {
+  HOME = "Home",
+  PREFERENCES = "Preferences",
+  GEARTABLE = "GearTable",
+  IMPRESSUM = "Impressum",
+}
 
 export type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -28,7 +35,7 @@ export type ImpressumScreenNavigationProp = StackNavigationProp<
 >;
 
 export type HomeScreenRouteProp = RouteProp<RootStackParamList, "Home">;
-export type PreferencesScreenRouteProp = RouteProp<RootStackParamList,"Preferences">;
+// export type PreferencesScreenRouteProp = RouteProp<RootStackParamList,"Preferences">;
 
 // Type for Settings
 export type SettingsState = {
@@ -55,9 +62,9 @@ export enum SETTINGS_SPROCKET_TYPE {
 
 export type SetSprocketAction = {
   type: string;
-  sprocketType: SETTINGS_SPROCKET_TYPE,
+  sprocketType: SETTINGS_SPROCKET_TYPE;
   sprockets: number[];
-}
+};
 
 export enum SETTINGS_NUMBER_TYPE {
   CADENCE = "NUMBER/CADENCE",
@@ -68,7 +75,7 @@ export type SetNumberAction = {
   type: string;
   numberType: SETTINGS_NUMBER_TYPE;
   value: number;
-}
+};
 
 export type SettingsAction = SetSettingsAction | ClearSettingsActions;
 
@@ -90,7 +97,7 @@ export type TransmissionState = {
   rearSprocket: number;
   transmission: number;
   validity: number;
-}
+};
 
 // transmissions actions
 export type TransmissionsAction = SetTransmissionsAction;
@@ -98,12 +105,12 @@ export type TransmissionsAction = SetTransmissionsAction;
 export type SetTransmissionsAction = {
   type: string;
   sprocketData: SproketCounts;
-}
+};
 
 export type SproketCounts = {
   sprocketsFront: number[];
   sprocketsRear: number[];
-}
+};
 
 // General App State Type
 export type AppState = {
@@ -113,8 +120,8 @@ export type AppState = {
 };
 
 export type MapRegion = {
-  latitude: number,
-  longitude: number,
-  latitudeDelta: number,
-  longitudeDelta: number,
-}
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
+};
