@@ -23,8 +23,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
 import { setTransmissions } from "../../redux/transmissions/actions";
-import { ThemeProvider, useTheme } from "@react-navigation/native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { useTheme } from "@react-navigation/native";
 
 export function Preferences() {
   const settings = useSelector<AppState, SettingsState>(

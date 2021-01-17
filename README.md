@@ -16,7 +16,7 @@ yarn android
     * Anzahl der Zähne pro Ritzel
     * Bevorzugte Trittfrequenz
     * Reifengröße
-    
+
 * Main Window
     * Optimale Ritzel für bevorzugte Trittfrequenz
     * Geschwindigkeit
@@ -42,3 +42,4 @@ yarn android
 * React Navigation: https://reactnavigation.org/docs/getting-started
 * React Localization: https://medium.com/cybermonkey/multiple-language-support-in-react-native-part-1-fa6966b62332
 * React Persist: https://github.com/rt2zz/redux-persist#storage-engines
+* Convert SVG to React Component: https://react-svgr.com/playground/?native=true&typescript=true

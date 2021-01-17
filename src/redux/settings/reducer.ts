@@ -23,19 +23,14 @@ export const settings = (
       return { ...settingData };
     case SETTINGS_ACTION_TYPE.CLEAR_SETTINGS:
       clearAsyncStorage();
-      console.log(initialState);
       return JSON.parse(JSON.stringify(initialState));
     case SETTINGS_ACTION_TYPE.SET_SPROCKETS:
-      console.log("saveSprockets")
       const {sprocketType, sprockets} = <SetSprocketAction>action;  
-      console.log(sprocketType)
       switch(sprocketType) {
         case SETTINGS_SPROCKET_TYPE.FRONT:
-          console.log(sprockets)
           state.frontSprockets = [...sprockets];
           return {...state};
         case SETTINGS_SPROCKET_TYPE.REAR:
-          console.log(sprockets)
           state.rearSprockets = [...sprockets];
           return {...state};
       }

@@ -17,6 +17,8 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { LocationObject } from "expo-location";
 import { setTransmissions } from "../redux/transmissions/actions";
+import BigSprocket from "../components/main/bigSprocket";
+import SmallSprocket from "../components/main/smallSprocket";
 
 type Props = {
   route: HomeScreenRouteProp;
@@ -143,6 +145,10 @@ export function HomeScreen({ route, navigation }: Props) {
       </View>
       <View>
         <Text>{new Date(location.timestamp).toString() + "  " + JSON.stringify(location.coords)}</Text>
+      </View>
+      <View style={styles.horizontal}>
+        <BigSprocket />
+        <SmallSprocket />
       </View>
     </ScrollView>
   );
