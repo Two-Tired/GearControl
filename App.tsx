@@ -33,6 +33,7 @@ const CombinedDefaultTheme = {
   colors: {
     ...PaperDefaultTheme.colors,
     ...NavigationDefaultTheme.colors,
+    accent: NavigationDefaultTheme.colors.primary,
   },
 };
 const CombinedDarkTheme = {

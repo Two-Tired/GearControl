@@ -20,4 +20,6 @@ export default {
   quote: "Work simplification, convenience and the strive for perfection are the motivating factors for most discoveries and inventions.",
   team: "Our Team",
   teamDescription: "We at 'Two-Tired' are two friends from the region around Cologne-Bonn (GER) who have fun with and while programming.",
+  bikeSpecific: "Bike",
+  userSpecific: "User"
 };

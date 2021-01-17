@@ -6,6 +6,7 @@ import {
   FAB,
   Divider,
   Subheading,
+  Headline,
 } from "react-native-paper";
 import {
   AppState,
@@ -76,7 +77,18 @@ export function Preferences() {
 
   return (
     <ScrollView style={styles.container}>
+      <Headline style={styles.headline}>{t("bikeSpecific")}</Headline>
       <View style={styles.container}>
+        <TextInput
+          mode="flat"
+          label={t("tireCircumference")}
+          value={tireCircumference.toString()}
+          onChangeText={(text) =>
+            saveNumber(tryParseFloat(text), SETTINGS_NUMBER_TYPE.CIRCUMFERENCE)
+          }
+          style={styles.inputGeneral}
+        />
+        <Divider />
         <Subheading style={styles.category}>{t("frontSprockets")}</Subheading>
         <View style={styles.sprocketContainer}>
           <View style={[styles.sprocketList]}>
@@ -155,6 +167,7 @@ export function Preferences() {
           </View>
         </View>
         <Divider />
+        <Headline style={styles.headline}>{t("userSpecific")}</Headline>
         <View style={[styles.horizontalContainer]}>
           <TextInput
             mode="flat"
@@ -162,18 +175,6 @@ export function Preferences() {
             value={favoriteCadence.toString()}
             onChangeText={(text) =>
               saveNumber(tryParseInt(text), SETTINGS_NUMBER_TYPE.CADENCE)
-            }
-            style={styles.inputGeneral}
-          />
-          <TextInput
-            mode="flat"
-            label={t("tireCircumference")}
-            value={tireCircumference.toString()}
-            onChangeText={(text) =>
-              saveNumber(
-                tryParseFloat(text),
-                SETTINGS_NUMBER_TYPE.CIRCUMFERENCE
-              )
             }
             style={styles.inputGeneral}
           />
@@ -210,12 +211,17 @@ const styles = StyleSheet.create({
   },
   inputGeneral: {
     width: "100%",
+    margin: 5,
   },
   button: {
     width: "80%",
   },
   category: {
     alignSelf: "center",
+  },
+  headline: {
+    alignSelf: "flex-start",
+    margin: 5,
   },
   sprocketContainer: {
     flex: 1,

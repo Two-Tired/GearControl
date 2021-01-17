@@ -20,4 +20,6 @@ export default {
   quote: "Arbeitserleichterung, Bequemlichkeit und das Streben nach Perfektion sind die Triebfedern der meisten Entdeckungen und Erfindungen.",
   team: "Unser Team",
   teamDescription: "Wir bei 'Two-Tired' sind zwei Freunde aus der Region Köln-Bonn die Spaß am und während dem Programmieren haben!",
+  bikeSpecific: "Fahrrad",
+  userSpecific: "Fahrer"
 };
