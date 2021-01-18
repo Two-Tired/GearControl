@@ -27,7 +27,7 @@ export function CustomNavigationBar({ navigation, previous }: Props) {
     <Appbar.Header>
       {previous ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
       <Appbar.Content
-        title={name === SCREEN.IMPRESSUM ? t("impressum") : t("appName")}
+        title={name === SCREEN.IMPRESSUM ? t("impressum") : name === SCREEN.PREFERENCES ? t("preferences") : t("appName")}
       />
       {/* {!previous ? ( */}
       <Menu
