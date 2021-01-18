@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ScrollView,
@@ -8,12 +8,15 @@ import {
   Platform,
 } from "react-native";
 import { Text } from "react-native-paper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearSettings } from "../redux/settings/actions";
 import { setLocation, setLocationError } from "../redux/location/actions";
 import {
+  AppState,
+  BestGearCombination,
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
+  SettingsState,
 } from "../types";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
@@ -21,6 +24,7 @@ import * as Permissions from "expo-permissions";
 import { LocationObject } from "expo-location";
 import BigSprocket from "../components/main/bigSprocket";
 import SmallSprocket from "../components/main/smallSprocket";
+import { createTransmissionTable, getGears } from "../helper/Transmissions";
 
 type Props = {
   route: HomeScreenRouteProp;
@@ -30,8 +34,13 @@ type Props = {
 export function HomeScreen({ route, navigation }: Props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const resetSettings = () => dispatch(clearSettings());
-
+  const settings = useSelector<AppState, SettingsState>(
+    (store) => store.settings
+  );
+  const location = useSelector<AppState, LocationObject>(
+    (store) => store.location
+  );
+  
   useEffect(() => {
     (async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -59,15 +68,29 @@ export function HomeScreen({ route, navigation }: Props) {
     locationCallback
   );
 
+  const transmissions = useMemo(() => {
+    return [
+      ...createTransmissionTable(
+        settings.frontSprockets,
+        settings.rearSprockets
+      ),
+    ];
+  }, [settings.frontSprockets, settings.rearSprockets]);
+
+  const gearCombination: BestGearCombination = useMemo(() => {
+    return getGears(location.coords.speed, transmissions, settings.tireCircumference, settings.favoriteCadence)
+  }, [location.coords.speed, settings.tireCircumference, settings.favoriteCadence])
+
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.gearContainer}>
-        <BigSprocket />
-        <View style={styles.horizontalSpace}>
-          <Text style={[styles.speed]}>27,3</Text>
-          <Text style={[styles.speedUnit]}>km/h</Text>
-        </View>
-        <SmallSprocket />
+        <BigSprocket gear={gearCombination.frontSprocketKey}/>
+          <View style={styles.horizontalSpace}>
+            <Text style={[styles.speed]}>{gearCombination.speed.toFixed(1)}</Text>
+            <Text style={[styles.speedUnit]}>km/h</Text>
+          </View>
+          <SmallSprocket gear={gearCombination.rearSprocketKey}/>
       </View>
       <View style={styles.mapContainer}>
         <MapView

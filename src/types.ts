@@ -48,7 +48,9 @@ export type SettingsState = {
 // transmissions types
 export type TransmissionState = {
   frontSprocket: number;
+  frontSprocketKey: number;
   rearSprocket: number;
+  rearSprocketKey: number;
   transmission: number;
   validity: number;
 };
@@ -116,3 +118,13 @@ export type MapRegion = {
   latitudeDelta: number;
   longitudeDelta: number;
 };
+
+export type BestGearCombination = {
+  speed: number,
+  transmissionNeeded: number,
+  transmissionBest: number,
+  frontSprocket: number,
+  frontSprocketKey: number,
+  rearSprocket: number,
+  rearSprocketKey: number,
+}

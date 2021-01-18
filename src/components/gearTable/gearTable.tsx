@@ -1,11 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
-import { AppState, SettingsState } from "../../types";
+import { AppState, BestGearCombination, SettingsState } from "../../types";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
 import { DataTable } from "react-native-paper";
-import { createTransmissionTable } from "../../helper/Transmissions";
+import { createTransmissionTable, getGears } from "../../helper/Transmissions";
 
 export function GearTable() {
   const settings = useSelector<AppState, SettingsState>(
@@ -14,59 +14,31 @@ export function GearTable() {
 
   const { t } = useTranslation();
 
-  const closestIndex = (num: number, arr: number[]) => {
-    let curr = arr[0],
-      diff = Math.abs(num - curr);
-    let index = 0;
-    for (let val = 0; val < arr.length; val++) {
-      let newdiff = Math.abs(num - arr[val]);
-      if (newdiff < diff) {
-        diff = newdiff;
-        curr = arr[val];
-        index = val;
-      }
-    }
-    return index;
-  };
-
   const transmissions = useMemo(() => {
-    return [...createTransmissionTable(settings.frontSprockets, settings.rearSprockets)];
+    return [
+      ...createTransmissionTable(
+        settings.frontSprockets,
+        settings.rearSprockets
+      ),
+    ];
   }, [settings.frontSprockets, settings.rearSprockets]);
 
   function createTestTable(testSpeeds: number[]) {
     if (transmissions.length == 0) return [];
-    let table = [];
+    let table: BestGearCombination[] = [];
     testSpeeds.map((speed, index) => {
-      let currRow = {};
-      currRow.speed = speed;
-      currRow.transmissionNeeded =
-        (60000 * speed) /
-        (settings.tireCircumference * settings.favoriteCadence);
+      let currRow = { ...getGears(speed, transmissions, settings.tireCircumference, settings.favoriteCadence) };
 
-      let bestIndex = closestIndex(
-        currRow.transmissionNeeded,
-        transmissions.map((a) => a.transmission)
-      );
-      currRow.transmissionBest = transmissions[bestIndex].transmission;
-      currRow.sprocketFront = transmissions[bestIndex].frontSprocket;
-      currRow.sprocketRear = transmissions[bestIndex].rearSprocket;
       table.push(currRow);
     });
     return table;
   }
 
-  let testTable = createTestTable([
-    10 / 9,
-    20 / 9,
-    30 / 9,
-    40 / 9,
-    50 / 9,
-    60 / 9,
-    70 / 9,
-    80 / 9,
-    90 / 9,
-    100 / 9,
-  ]);
+  const speedTable = Array.from(Array(10).keys()).map((_, index) => {
+    return ((1 + index) * 10) / 9;
+  });
+
+  let testTable = createTestTable(speedTable);
 
   return (
     <ScrollView style={styles.container}>
@@ -97,10 +69,10 @@ export function GearTable() {
                 {row.transmissionBest.toFixed(2)}
               </DataTable.Cell>
               <DataTable.Cell key={index + 3}>
-                {row.sprocketFront}
+                {row.frontSprocket + "[" + row.frontSprocketKey + "]"}
               </DataTable.Cell>
               <DataTable.Cell key={index + 4}>
-                {row.sprocketRear}
+                {row.rearSprocket + "[" + row.rearSprocketKey + "]"}
               </DataTable.Cell>
               <DataTable.Cell key={index + 5}>
                 {actualCadence.toFixed(2)}
