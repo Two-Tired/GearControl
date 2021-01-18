@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { StyleSheet } from "react-native";
-import { AppState, SettingsState, TransmissionState } from "../../types";
+import { AppState, SettingsState } from "../../types";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";

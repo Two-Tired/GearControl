@@ -7,16 +7,13 @@ import {
   Dimensions,
   Platform,
 } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
+import { Text } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import { clearSettings } from "../redux/settings/actions";
 import { setLocation, setLocationError } from "../redux/location/actions";
 import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
-  SettingsState,
-  AppState,
-  TransmissionState,
 } from "../types";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
@@ -72,6 +69,19 @@ export function HomeScreen({ route, navigation }: Props) {
         </View>
         <SmallSprocket />
       </View>
+      <View style={styles.mapContainer}>
+        <MapView
+          style={styles.map}
+          showsUserLocation={true}
+          initialRegion={{
+            longitude: 7,
+            latitude: 50.8,
+            longitudeDelta: 0.0922,
+            latitudeDelta: 0.0922,
+          }}
+        />
+      </View>
+
       {/* <View style={styles.horizontal}>
         <Button
           style={styles.button}
