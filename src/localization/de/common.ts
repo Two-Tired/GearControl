@@ -11,6 +11,7 @@ export default {
   test: "test",
   reset: "Zurücksetzen",
   speed: "Geschwindigkeit [km/h]",
+  speedUnit: "km/h",
   transmissionTarget: "Soll-Übersetzung",
   transmissionBest: "Bestmögliche Übersetzung",
   cadenceActual: "Tatsächliche Trittfrequenz [U/min]",

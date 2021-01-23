@@ -11,6 +11,7 @@ export default {
   test: "test",
   reset: "Reset",
   speed: "Speed [km/h]",
+  speedUnit: "km/h",
   transmissionTarget: "Target transmission",
   transmissionBest: "Best possible transmission",
   cadenceActual: "Actual cadence [rpm]",
