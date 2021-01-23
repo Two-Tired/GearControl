@@ -3,31 +3,65 @@ import React, { useMemo, useState } from "react";
 import Svg, { SvgProps, Path, Text } from "react-native-svg";
 import { sprocketPathDs, boundingBoxes } from "./sprocketPathDs";
 import { Dimensions } from "react-native";
-import { scaleNumber } from "../../helper/Transmissions";
-import { AppState, SETTINGS_SPROCKET_TYPE } from "../../types";
+import {
+  createTransmissionTable,
+  getGears,
+  scaleNumber,
+} from "../../helper/Transmissions";
+import {
+  AppState,
+  BestGearCombination,
+  SettingsState,
+  SETTINGS_SPROCKET_TYPE,
+} from "../../types";
 import { useSelector } from "react-redux";
 
 const window = Dimensions.get("window");
 const screen = Dimensions.get("screen");
 
 type Props = {
-  gear: number;
   sprocketType: SETTINGS_SPROCKET_TYPE;
   svgProps?: SvgProps;
 };
 
-function Sprocket({ gear, sprocketType, svgProps }: Props) {
+function Sprocket({ sprocketType, svgProps }: Props) {
   const { colors } = useTheme();
   const [dimensions, _] = useState({ window, screen });
+  const settings = useSelector<AppState, SettingsState>(
+    (store) => store.settings
+  );
+  const speed = useSelector<AppState, number | null>(
+    (store) => store.location.coords.speed
+  );
 
-  const sprockets =
-    sprocketType === SETTINGS_SPROCKET_TYPE.FRONT
-      ? useSelector<AppState, number[]>(
-          (store) => store.settings.frontSprockets
-        )
-      : useSelector<AppState, number[]>((store) =>
-          store.settings.rearSprockets.reverse()
-        );
+  const sprockets = useMemo(():number[] => {
+    return sprocketType === SETTINGS_SPROCKET_TYPE.FRONT
+      ?  settings.frontSprockets
+      : settings.rearSprockets;
+  }, [settings.frontSprockets, settings.rearSprockets]);
+
+  const transmissions = useMemo(() => {
+    return [
+      ...createTransmissionTable(
+        settings.frontSprockets,
+        settings.rearSprockets
+      ),
+    ];
+  }, [settings.frontSprockets, settings.rearSprockets]);
+
+  const gearCombination: BestGearCombination = useMemo(() => {
+    return getGears(
+      speed,
+      transmissions,
+      settings.tireCircumference,
+      settings.favoriteCadence
+    );
+  }, [speed, settings.tireCircumference, settings.favoriteCadence]);
+
+  const gear = useMemo(():number => {
+    return sprocketType === SETTINGS_SPROCKET_TYPE.FRONT
+  ?  gearCombination.frontSprocketKey
+  : gearCombination.rearSprocketKey}, [gearCombination]);
 
   const sprocketColors = [
     "#323232",

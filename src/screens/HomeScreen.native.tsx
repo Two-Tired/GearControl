@@ -59,41 +59,26 @@ export function HomeScreen({ route, navigation }: Props) {
 
   Location.watchPositionAsync(
     {
-      accuracy: Location.Accuracy.Lowest,
-      timeInterval: 5000, // at min 5 sec between measurements
-      distanceInterval: 10, // at min 10 meters between measurements
+      accuracy: Location.Accuracy.BestForNavigation,
+      timeInterval: 1000, // at min 5 sec between measurements
+      distanceInterval: 3, // at min 10 meters between measurements
     },
     locationCallback
   );
 
-  const transmissions = useMemo(() => {
-    return [
-      ...createTransmissionTable(
-        settings.frontSprockets,
-        settings.rearSprockets
-      ),
-    ];
-  }, [settings.frontSprockets, settings.rearSprockets]);
-
-  const convertToKMH = (speed:number):number => {
-    return speed * 3.6;
+  const convertToKMH = (speed:number|null):number => {
+    return speed ? speed * 3.6 : 0;
   }
-
-  const gearCombination: BestGearCombination = useMemo(() => {
-    return getGears(location.coords.speed, transmissions, settings.tireCircumference, settings.favoriteCadence)
-  }, [location.coords.speed, settings.tireCircumference, settings.favoriteCadence])
-
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.gearContainer}>
-        {/* <BigSprocket gear={gearCombination.frontSprocketKey}/> */}
-          <Sprocket gear={gearCombination.frontSprocketKey} sprocketType={SETTINGS_SPROCKET_TYPE.FRONT} />
+          <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.FRONT} />
           <View style={styles.horizontalSpaceSpeed}>
-            <Text style={[styles.speed]}>{convertToKMH(gearCombination.speed).toFixed(1)}</Text>
+            <Text style={[styles.speed]}>{convertToKMH(location.coords.speed).toFixed(1)}</Text>
             <Text style={[styles.speedUnit]}>km/h</Text>
           </View>
-          <Sprocket gear={gearCombination.rearSprocketKey} sprocketType={SETTINGS_SPROCKET_TYPE.REAR}/>
+          <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.REAR}/>
       </View>
       <View style={styles.mapContainer}>
         <MapView
