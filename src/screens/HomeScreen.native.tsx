@@ -25,6 +25,7 @@ import { LocationObject } from "expo-location";
 import BigSprocket from "../components/main/bigSprocket";
 import SmallSprocket from "../components/main/smallSprocket";
 import { createTransmissionTable, getGears } from "../helper/Transmissions";
+import FrontSprocket from "../components/main/frontSprocket";
 
 type Props = {
   route: HomeScreenRouteProp;
@@ -90,7 +91,7 @@ export function HomeScreen({ route, navigation }: Props) {
             <Text style={[styles.speed]}>{gearCombination.speed.toFixed(1)}</Text>
             <Text style={[styles.speedUnit]}>km/h</Text>
           </View>
-          <SmallSprocket gear={gearCombination.rearSprocketKey}/>
+          <FrontSprocket gear={gearCombination.rearSprocketKey}/>
       </View>
       <View style={styles.mapContainer}>
         <MapView

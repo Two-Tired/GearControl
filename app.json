@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "TwoTired",
-    "slug": "TwoTired",
+    "name": "GearControl",
+    "slug": "GearControl",
+    "owner": "two-tired",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -20,7 +21,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "de.twotired.app",
+      "package": "de.twotired.gearControl",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
