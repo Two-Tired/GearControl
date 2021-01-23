@@ -1,5 +1,5 @@
 import { useTheme } from "@react-navigation/native";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Svg, { SvgProps, Path, Text } from "react-native-svg";
 import { sprocketPathDs, boundingBoxes } from "./sprocketPathDs";
 import { Dimensions } from "react-native";
@@ -34,10 +34,10 @@ function Sprocket({ sprocketType, svgProps }: Props) {
     (store) => store.location.coords.speed
   );
 
-  const sprockets = useMemo(():number[] => {
+  const sprockets = useMemo((): number[] => {
     return sprocketType === SETTINGS_SPROCKET_TYPE.FRONT
-      ?  settings.frontSprockets
-      : settings.rearSprockets;
+      ? [...settings.frontSprockets]
+      : [...settings.rearSprockets].reverse();
   }, [settings.frontSprockets, settings.rearSprockets]);
 
   const transmissions = useMemo(() => {
@@ -58,10 +58,11 @@ function Sprocket({ sprocketType, svgProps }: Props) {
     );
   }, [speed, settings.tireCircumference, settings.favoriteCadence]);
 
-  const gear = useMemo(():number => {
+  const gear = useMemo((): number => {
     return sprocketType === SETTINGS_SPROCKET_TYPE.FRONT
-  ?  gearCombination.frontSprocketKey
-  : gearCombination.rearSprocketKey}, [gearCombination]);
+      ? gearCombination.frontSprocketKey
+      : gearCombination.rearSprocketKey;
+  }, [gearCombination]);
 
   const sprocketColors = [
     "#323232",
@@ -98,6 +99,19 @@ function Sprocket({ sprocketType, svgProps }: Props) {
     return boundingBoxes[sprockets[0]].width / 50;
   }, [sprockets]);
 
+  const highlight = useCallback(
+    (index: number): string => {
+      return sprocketType === SETTINGS_SPROCKET_TYPE.FRONT
+        ? sprockets.length - index == gear
+          ? colors.primary
+          : ""
+        : index + 1 == gear
+        ? colors.primary
+        : "";
+    },
+    [gear]
+  );
+
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +132,7 @@ function Sprocket({ sprocketType, svgProps }: Props) {
                 Math.ceil(scaleNumber(sprockets.length - 1, 14, index))
               ]
             }
-            stroke={sprockets.length - index == gear ? colors.primary : ""}
+            stroke={highlight(index)}
             strokeWidth={strokeWidth}
             strokeLinejoin="round"
             // stroke="#000"

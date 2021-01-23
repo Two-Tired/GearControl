@@ -1,17 +1,11 @@
 import React, { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
 import { Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { setLocation, setLocationError } from "../redux/location/actions";
 import {
   AppState,
-  BestGearCombination,
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
   SettingsState,
@@ -21,7 +15,6 @@ import MapView from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { LocationObject } from "expo-location";
-import { createTransmissionTable, getGears } from "../helper/Transmissions";
 import Sprocket from "../components/main/Sprocket";
 
 type Props = {
@@ -32,13 +25,10 @@ type Props = {
 export function HomeScreen({ route, navigation }: Props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const settings = useSelector<AppState, SettingsState>(
-    (store) => store.settings
-  );
   const location = useSelector<AppState, LocationObject>(
     (store) => store.location
   );
-  
+
   useEffect(() => {
     (async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -66,19 +56,21 @@ export function HomeScreen({ route, navigation }: Props) {
     locationCallback
   );
 
-  const convertToKMH = (speed:number|null):number => {
+  const convertToKMH = (speed: number | null): number => {
     return speed ? speed * 3.6 : 0;
-  }
+  };
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.gearContainer}>
-          <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.FRONT} />
-          <View style={styles.horizontalSpaceSpeed}>
-            <Text style={[styles.speed]}>{convertToKMH(location.coords.speed).toFixed(1)}</Text>
-            <Text style={[styles.speedUnit]}>km/h</Text>
-          </View>
-          <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.REAR}/>
+        <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.FRONT} />
+        <View style={styles.horizontalSpaceSpeed}>
+          <Text style={[styles.speed]}>
+            {convertToKMH(location.coords.speed).toFixed(1)}
+          </Text>
+          <Text style={[styles.speedUnit]}>km/h</Text>
+        </View>
+        <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.REAR} />
       </View>
       <View style={styles.mapContainer}>
         <MapView
@@ -90,6 +82,7 @@ export function HomeScreen({ route, navigation }: Props) {
             longitudeDelta: 0.0922,
             latitudeDelta: 0.0922,
           }}
+          followsUserLocation={true}
         />
       </View>
 
