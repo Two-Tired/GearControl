@@ -82,6 +82,12 @@ export function HomeScreen({ route, navigation }: Props) {
             longitudeDelta: 0.0922,
             latitudeDelta: 0.0922,
           }}
+          region={{
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0922,
+          }}
           followsUserLocation={true}
         />
       </View>
