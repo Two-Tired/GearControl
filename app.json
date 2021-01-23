@@ -29,7 +29,7 @@
           "apiKey": "AIzaSyDFdVcP1MuRPKTR48v4oEL_4jWtpVUg80c"
         }
       },
-      "permissions": ["ACCESS_BACKGROUND_LOCATION", "ACCESS_FINE_LOCATION"]
+      "permissions": ["ACCESS_FINE_LOCATION"]
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
