@@ -128,3 +128,10 @@ export type BestGearCombination = {
   rearSprocket: number,
   rearSprocketKey: number,
 }
+
+export type boundingBox = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};

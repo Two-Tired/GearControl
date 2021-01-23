@@ -48,6 +48,10 @@ function scaleBetween(fromArray: number[], toArray: number[]): number[] {
   );
 }
 
+export function scaleNumber(max: number, newMax:number, toScale: number): number {
+  return newMax * toScale / max;
+}
+
 function dist(fromArray: number[], toArray: number[]): number[][] {
   const res = Array.from(
     Array(fromArray.length),

@@ -5,11 +5,9 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  Platform,
 } from "react-native";
 import { Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-import { clearSettings } from "../redux/settings/actions";
 import { setLocation, setLocationError } from "../redux/location/actions";
 import {
   AppState,
@@ -17,15 +15,14 @@ import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
   SettingsState,
+  SETTINGS_SPROCKET_TYPE,
 } from "../types";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { LocationObject } from "expo-location";
-import BigSprocket from "../components/main/bigSprocket";
-import SmallSprocket from "../components/main/smallSprocket";
 import { createTransmissionTable, getGears } from "../helper/Transmissions";
-import FrontSprocket from "../components/main/frontSprocket";
+import Sprocket from "../components/main/Sprocket";
 
 type Props = {
   route: HomeScreenRouteProp;
@@ -78,6 +75,10 @@ export function HomeScreen({ route, navigation }: Props) {
     ];
   }, [settings.frontSprockets, settings.rearSprockets]);
 
+  const convertToKMH = (speed:number):number => {
+    return speed * 3.6;
+  }
+
   const gearCombination: BestGearCombination = useMemo(() => {
     return getGears(location.coords.speed, transmissions, settings.tireCircumference, settings.favoriteCadence)
   }, [location.coords.speed, settings.tireCircumference, settings.favoriteCadence])
@@ -86,12 +87,13 @@ export function HomeScreen({ route, navigation }: Props) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.gearContainer}>
-        <BigSprocket gear={gearCombination.frontSprocketKey}/>
-          <View style={styles.horizontalSpace}>
-            <Text style={[styles.speed]}>{gearCombination.speed.toFixed(1)}</Text>
+        {/* <BigSprocket gear={gearCombination.frontSprocketKey}/> */}
+          <Sprocket gear={gearCombination.frontSprocketKey} sprocketType={SETTINGS_SPROCKET_TYPE.FRONT} />
+          <View style={styles.horizontalSpaceSpeed}>
+            <Text style={[styles.speed]}>{convertToKMH(gearCombination.speed).toFixed(1)}</Text>
             <Text style={[styles.speedUnit]}>km/h</Text>
           </View>
-          <FrontSprocket gear={gearCombination.rearSprocketKey}/>
+          <Sprocket gear={gearCombination.rearSprocketKey} sprocketType={SETTINGS_SPROCKET_TYPE.REAR}/>
       </View>
       <View style={styles.mapContainer}>
         <MapView
@@ -150,8 +152,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#007aff",
   },
-  horizontalSpace: {
-    width: "30%",
+  horizontalSpaceSpeed: {
+    width: "20%",
     justifyContent: "center",
     alignItems: "center",
   },
