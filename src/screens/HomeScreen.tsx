@@ -78,6 +78,10 @@ export function HomeScreen({ route, navigation }: Props) {
     ];
   }, [settings.frontSprockets, settings.rearSprockets]);
 
+  const convertToKMH = (speed:number):number => {
+    return speed * 3.6;
+  }
+
   const gearCombination: BestGearCombination = useMemo(() => {
     return getGears(location.coords.speed, transmissions, settings.tireCircumference, settings.favoriteCadence)
   }, [location.coords.speed, settings.tireCircumference, settings.favoriteCadence])
@@ -87,8 +91,8 @@ export function HomeScreen({ route, navigation }: Props) {
       <View style={styles.gearContainer}>
         <BigSprocket gear={gearCombination.frontSprocketKey}/>
         <View style={styles.horizontalSpace}>
-          <Text style={[styles.speed]}>{gearCombination.speed.toFixed(1)}</Text>
-          <Text style={[styles.speedUnit]}>km/h</Text>
+          <Text style={[styles.speed]}>{convertToKMH(gearCombination.speed).toFixed(1)}</Text>
+          <Text style={[styles.speedUnit]}>{t("speedUnit")}</Text>
         </View>
         <SmallSprocket gear={gearCombination.rearSprocketKey}/>
       </View>
