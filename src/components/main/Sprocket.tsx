@@ -1,5 +1,5 @@
 import { useTheme } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Svg, { SvgProps, Path, Text } from "react-native-svg";
 import { sprocketPathDs, boundingBoxes } from "./sprocketPathDs";
 import { Dimensions } from "react-native";
@@ -25,30 +25,30 @@ function Sprocket({ gear, sprocketType, svgProps }: Props) {
       ? useSelector<AppState, number[]>(
           (store) => store.settings.frontSprockets
         )
-      : useSelector<AppState, number[]>(
-          (store) => store.settings.rearSprockets.reverse()
+      : useSelector<AppState, number[]>((store) =>
+          store.settings.rearSprockets.reverse()
         );
 
   const sprocketColors = [
-    "#003f76",
-    "#004e92",
-    "#005dae",
-    "#006cca",
-    "#007be6",
-    "#0389ff",
-    "#1f96ff",
-    "#3ba4ff",
-    "#57b1ff",
-    "#73beff",
-    "#8fcbff",
-    "#abd8ff",
-    "#c7e5ff",
-    "#e3f2ff",
+    "#323232",
+    "#404040",
+    "#4f4f4f",
+    "#5e5e5e",
+    "#6c6c6c",
+    "#7b7b7b",
+    "#8a8a8a",
+    "#989898",
+    "#a7a7a7",
+    "#b6b6b6",
+    "#c4c4c4",
+    "#d3d3d3",
+    "#e2e2e2",
+    "#f0f0f0",
     "#ffffff",
   ];
   const highlightColor = "#d00000";
 
-  const viewBox = (): string => {
+  const viewBox = useMemo((): string => {
     return (
       boundingBoxes[sprockets[0]].x +
       " " +
@@ -58,14 +58,18 @@ function Sprocket({ gear, sprocketType, svgProps }: Props) {
       " " +
       boundingBoxes[sprockets[0]].height
     );
-  };
+  }, [sprockets]);
+
+  const strokeWidth = useMemo((): number => {
+    return boundingBoxes[sprockets[0]].width / 50;
+  }, [sprockets]);
 
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
       width="40%"
       height={dimensions.window.width * 0.4}
-      viewBox={viewBox()}
+      viewBox={viewBox}
       {...svgProps}
     >
       {sprockets.map((value, index) => {
@@ -76,13 +80,12 @@ function Sprocket({ gear, sprocketType, svgProps }: Props) {
             // d={sprocketPathDs[40]}
             fillRule="evenodd"
             fill={
-              index + 1 == gear
-                ? highlightColor
-                : sprocketColors[
-                    Math.ceil(scaleNumber(sprockets.length, 15, index))
-                  ]
+              sprocketColors[
+                Math.ceil(scaleNumber(sprockets.length - 1, 14, index))
+              ]
             }
-            strokeWidth={0.4}
+            stroke={sprockets.length - index == gear ? colors.primary : ""}
+            strokeWidth={strokeWidth}
             strokeLinejoin="round"
             // stroke="#000"
             strokeMiterlimit={10}
