@@ -21,16 +21,16 @@ import "./src/localization";
 import { GearTableScreen } from "./src/screens/GearTableScreen";
 import { ImpressumScreen } from "./src/screens/ImpressumScreen";
 
-if (process.env.NODE_ENV === 'development') {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render');
-  const ReactRedux = require('react-redux');
-  whyDidYouRender(React, {
-    trackAllPureComponents: true,
-    trackExtraHooks: [
-      [ReactRedux, 'useSelector']
-    ]
-  });
-}
+// if (process.env.NODE_ENV === 'development') {
+//   const whyDidYouRender = require('@welldone-software/why-did-you-render');
+//   const ReactRedux = require('react-redux');
+//   whyDidYouRender(React, {
+//     trackAllPureComponents: true,
+//     trackExtraHooks: [
+//       [ReactRedux, 'useSelector']
+//     ]
+//   });
+// }
 
 const RootStack = createStackNavigator<RootStackParamList>();
 

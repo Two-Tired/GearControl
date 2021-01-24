@@ -1,38 +1,45 @@
 import { View, StyleSheet } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo } from "react";
 import Sprocket from "./Sprocket";
 import { Text } from "react-native-paper";
-import { AppState, SETTINGS_SPROCKET_TYPE } from "../../types";
-import { useDispatch, useSelector } from "react-redux";
-import { LocationObject } from "expo-location";
-import { setLocation, setLocationError } from "../../redux/location/actions";
-import * as Location from "expo-location";
-import * as Permissions from "expo-permissions";
+import { SETTINGS_SPROCKET_TYPE } from "../../types";
 
-export function SprocketView({}) {
-  const location = useSelector<AppState, LocationObject>(
-    (store) => store.location
-  );
+type SprocketViewProps = {
+  frontSprockets: number[];
+  rearSprockets: number[];
+  frontGear: number;
+  rearGear: number;
+  speed: string;
+};
 
-  const convertToKMH = useCallback((speed: number | null): number => {
-    return speed ? speed * 3.6 : 0;
-  }, [location.coords.speed]);
-
+function SprocketView({
+  frontSprockets,
+  rearSprockets,
+  frontGear,
+  rearGear,
+  speed,
+}: SprocketViewProps) {
   return (
     <View style={styles.gearContainer}>
-      <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.FRONT} />
+      <Sprocket
+        sprockets={frontSprockets}
+        gear={frontGear}
+        sprocketType={SETTINGS_SPROCKET_TYPE.FRONT}
+      />
       <View style={styles.horizontalSpaceSpeed}>
-        <Text style={[styles.speed]}>
-          {convertToKMH(location.coords.speed).toFixed(1)}
-        </Text>
+        <Text style={[styles.speed]}>{speed}</Text>
         <Text style={[styles.speedUnit]}>km/h</Text>
       </View>
-      <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.REAR} />
+      <Sprocket
+        sprockets={rearSprockets}
+        gear={rearGear}
+        sprocketType={SETTINGS_SPROCKET_TYPE.REAR}
+      />
     </View>
   );
 }
 
-SprocketView.whyDidYouRender = true
+// SprocketView.whyDidYouRender = true;
 
 const styles = StyleSheet.create({
   gearContainer: {
@@ -55,3 +62,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+export default memo(SprocketView);

@@ -1,20 +1,12 @@
-import React, { useEffect, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
 import { Text } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
-import { setLocation, setLocationError } from "../redux/location/actions";
+import { useSelector } from "react-redux";
 import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
   SettingsState,
   AppState,
-  BestGearCombination,
   SETTINGS_SPROCKET_TYPE,
 } from "../types";
 import * as Location from "expo-location";
@@ -22,70 +14,88 @@ import * as Permissions from "expo-permissions";
 import { LocationObject } from "expo-location";
 import { createTransmissionTable, getGears } from "../helper/Transmissions";
 import Sprocket from "../components/main/Sprocket";
-import { SprocketView } from "../components/main/SprocketView";
 
 type Props = {
   route: HomeScreenRouteProp;
   navigation: HomeScreenNavigationProp;
 };
 
+const initialState: LocationObject = {
+  coords: {
+    latitude: 50,
+    longitude: 7,
+    altitude: 50,
+    accuracy: 0,
+    altitudeAccuracy: 0,
+    heading: 0,
+    speed: 0,
+  },
+  timestamp: 0,
+};
+
 export function HomeScreen({ route, navigation }: Props) {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const [location, setLocation] = useState(initialState);
+
   const settings = useSelector<AppState, SettingsState>(
     (store) => store.settings
-  );
-  const location = useSelector<AppState, LocationObject>(
-    (store) => store.location
   );
 
   useEffect(() => {
     (async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
       if (status !== "granted") {
-        dispatch(setLocationError());
+        return;
       }
+
+      let newLocation: LocationObject = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.BestForNavigation,
+      });
+      setLocation(newLocation);
     })();
+  }, [location]);
 
-    // let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Highest});
-    // dispatch(setLocation(location));
-  }, []);
-
-  const locationCallback = (location: LocationObject) => {
-    // var date = new Date(location.timestamp);
-    // console.log(date.toString() + "  " + JSON.stringify(location.coords));
-    dispatch(setLocation(location));
-  };
-
-  Location.watchPositionAsync(
-    {
-      accuracy: Location.Accuracy.BestForNavigation,
-      timeInterval: 1000, // at min 5 sec between measurements
-      distanceInterval: 3, // at min 10 meters between measurements
-    },
-    locationCallback
-  );
+  const convertToKMH = useMemo(() => {
+    return location.coords.speed
+      ? (location.coords.speed * 3.6).toFixed(1)
+      : "0.0";
+  }, [location.coords.speed]);
 
   const transmissions = useMemo(() => {
-    return [
-      ...createTransmissionTable(
-        settings.frontSprockets,
-        settings.rearSprockets
-      ),
-    ];
+    return createTransmissionTable(
+      settings.frontSprockets,
+      settings.rearSprockets
+    );
   }, [settings.frontSprockets, settings.rearSprockets]);
 
-  const convertToKMH = (speed:number):number => {
-    return speed * 3.6;
-  }
+  const gears = getGears(
+    location.coords.speed,
+    transmissions,
+    settings.tireCircumference,
+    settings.favoriteCadence
+  );
 
-  const gearCombination: BestGearCombination = useMemo(() => {
-    return getGears(location.coords.speed, transmissions, settings.tireCircumference, settings.favoriteCadence)
-  }, [location.coords.speed, settings.tireCircumference, settings.favoriteCadence])
+  const rearSprocketsReverse = useMemo(() => {
+    return [...settings.rearSprockets].reverse();
+  }, [settings.rearSprockets]);
 
   return (
     <ScrollView style={styles.container}>
-      <SprocketView />
+      <View style={styles.gearContainer}>
+        <Sprocket
+          sprockets={settings.frontSprockets}
+          gear={gears.frontSprocketKey}
+          sprocketType={SETTINGS_SPROCKET_TYPE.FRONT}
+        />
+        <View style={styles.horizontalSpaceSpeed}>
+          <Text style={[styles.speed]}>{convertToKMH}</Text>
+          <Text style={[styles.speedUnit]}>km/h</Text>
+        </View>
+        <Sprocket
+          sprockets={rearSprocketsReverse}
+          gear={gears.rearSprocketKey}
+          sprocketType={SETTINGS_SPROCKET_TYPE.REAR}
+        />
+      </View>
       {/* <View style={styles.horizontal}>
         <Button
           style={styles.button}

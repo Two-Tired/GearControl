@@ -1,72 +1,102 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { setLocation, setLocationError } from "../redux/location/actions";
+import { useSelector } from "react-redux";
 import {
   AppState,
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
+  SettingsState,
+  SETTINGS_SPROCKET_TYPE,
 } from "../types";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { LocationObject } from "expo-location";
-import { SprocketView } from "../components/main/SprocketView";
+import { createTransmissionTable, getGears } from "../helper/Transmissions";
+import { Text } from "react-native-paper";
+import Sprocket from "../components/main/Sprocket";
 
 type Props = {
   route: HomeScreenRouteProp;
   navigation: HomeScreenNavigationProp;
 };
 
+const initialState: LocationObject = {
+  coords: {
+    latitude: 50,
+    longitude: 7,
+    altitude: 50,
+    accuracy: 0,
+    altitudeAccuracy: 0,
+    heading: 0,
+    speed: 0,
+  },
+  timestamp: 0,
+};
+
 export function HomeScreen({ route, navigation }: Props) {
-  // const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const location = useSelector<AppState, LocationObject>(
-    (store) => store.location
+  const [location, setLocation] = useState(initialState);
+
+  const settings = useSelector<AppState, SettingsState>(
+    (store) => store.settings
   );
 
   useEffect(() => {
     (async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
-      console.log(status)
       if (status !== "granted") {
-        dispatch(setLocationError());
+        return;
       }
-    })();
 
-    Location.watchPositionAsync(
-      {
+      let newLocation: LocationObject = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.BestForNavigation,
-        timeInterval: 1000, // at min 5 sec between measurements
-        distanceInterval: 3, // at min 10 meters between measurements
-      },
-      locationCallback
-    );    // let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Highest});
-    // dispatch(setLocation(location));
-  }, []);
+      });
+      setLocation(newLocation);
+    })();
+  }, [location]);
 
-  const locationCallback = (location: LocationObject) => {
-    // var date = new Date(location.timestamp);
-    // console.log(date.toString() + "  " + JSON.stringify(location.coords));
-    dispatch(setLocation(location));
-  };
+  const convertToKMH = useMemo(() => {
+    return location.coords.speed
+      ? (location.coords.speed * 3.6).toFixed(1)
+      : "0.0";
+  }, [location.coords.speed]);
 
-  Location.watchPositionAsync(
-    {
-      accuracy: Location.Accuracy.BestForNavigation,
-      timeInterval: 1000, // at min 5 sec between measurements
-      distanceInterval: 3, // at min 10 meters between measurements
-    },
-    locationCallback
+  const transmissions = useMemo(() => {
+    return createTransmissionTable(
+      settings.frontSprockets,
+      settings.rearSprockets
+    );
+  }, [settings.frontSprockets, settings.rearSprockets]);
+
+  const gears = getGears(
+    location.coords.speed,
+    transmissions,
+    settings.tireCircumference,
+    settings.favoriteCadence
   );
 
-  // const convertToKMH = (speed: number | null): number => {
-  //   return speed ? speed * 3.6 : 0;
-  // };
+  const rearSprocketsReverse = useMemo(() => {
+    return [...settings.rearSprockets].reverse();
+  }, [settings.rearSprockets]);
 
   return (
     <ScrollView style={styles.container}>
-      <SprocketView />
+      <View style={styles.gearContainer}>
+        <Sprocket
+          sprockets={settings.frontSprockets}
+          gear={gears.frontSprocketKey}
+          sprocketType={SETTINGS_SPROCKET_TYPE.FRONT}
+        />
+        <View style={styles.horizontalSpaceSpeed}>
+          <Text style={[styles.speed]}>{convertToKMH}</Text>
+          <Text style={[styles.speedUnit]}>km/h</Text>
+        </View>
+        <Sprocket
+          sprockets={rearSprocketsReverse}
+          gear={gears.rearSprocketKey}
+          sprocketType={SETTINGS_SPROCKET_TYPE.REAR}
+        />
+      </View>
       <View style={styles.mapContainer}>
         <MapView
           style={styles.map}
@@ -74,14 +104,14 @@ export function HomeScreen({ route, navigation }: Props) {
           initialRegion={{
             longitude: 7,
             latitude: 50.8,
-            longitudeDelta: 0.0922,
-            latitudeDelta: 0.0922,
+            longitudeDelta: 0.01,
+            latitudeDelta: 0.01,
           }}
           region={{
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0922,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
           }}
           followsUserLocation={true}
         />
