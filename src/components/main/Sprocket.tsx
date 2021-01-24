@@ -1,6 +1,6 @@
 import { useTheme } from "@react-navigation/native";
 import React, { useCallback, useMemo, useState } from "react";
-import Svg, { SvgProps, Path, Text } from "react-native-svg";
+import Svg, { SvgProps, Path, Text, Circle, TSpan } from "react-native-svg";
 import { sprocketPathDs, boundingBoxes } from "./sprocketPathDs";
 import { Dimensions } from "react-native";
 import {
@@ -96,7 +96,11 @@ function Sprocket({ sprocketType, svgProps }: Props) {
   }, [sprockets]);
 
   const strokeWidth = useMemo((): number => {
-    return boundingBoxes[sprockets[0]].width / 50;
+    return boundingBoxes[sprockets[0]].width / 170;
+  }, [sprockets]);
+
+  const innerRadius = useMemo((): number => {
+    return boundingBoxes[sprockets[0]].width * 0.17;
   }, [sprockets]);
 
   const highlight = useCallback(
@@ -104,10 +108,23 @@ function Sprocket({ sprocketType, svgProps }: Props) {
       return sprocketType === SETTINGS_SPROCKET_TYPE.FRONT
         ? sprockets.length - index == gear
           ? colors.primary
-          : ""
+          : "#000"
         : index + 1 == gear
         ? colors.primary
-        : "";
+        : "#000";
+    },
+    [gear]
+  );
+
+  const highlightFill = useCallback(
+    (index: number): string => {
+      return sprocketType === SETTINGS_SPROCKET_TYPE.FRONT
+        ? sprockets.length - index == gear
+          ? colors.primary
+          : "#fff"
+        : index + 1 == gear
+        ? colors.primary
+        : "#fff";
     },
     [gear]
   );
@@ -127,11 +144,12 @@ function Sprocket({ sprocketType, svgProps }: Props) {
             d={sprocketPathDs[value]}
             // d={sprocketPathDs[40]}
             fillRule="evenodd"
-            fill={
-              sprocketColors[
-                Math.ceil(scaleNumber(sprockets.length - 1, 14, index))
-              ]
-            }
+            // fill={
+            //   sprocketColors[
+            //     Math.ceil(scaleNumber(sprockets.length - 1, 14, index))
+            //   ]
+            // }
+            fill={highlightFill(index)}
             stroke={highlight(index)}
             strokeWidth={strokeWidth}
             strokeLinejoin="round"
@@ -140,15 +158,26 @@ function Sprocket({ sprocketType, svgProps }: Props) {
           />
         );
       })}
+      <Circle
+        cx="0"
+        cy="0"
+        r ={innerRadius}
+        stroke="#000"
+        strokeWidth={strokeWidth}
+        fill="#fff"
+      />
       <Text
-        x={-boundingBoxes[sprockets[0]].width / 9}
-        y={boundingBoxes[sprockets[0]].width / 9}
+        x="0"
+        y="0"
+        textAnchor="middle"
+        alignmentBaseline="central" // android
+        dominantBaseline="central" // firefox
         id="rearSprocket"
         fill={colors.primary}
         fontSize={boundingBoxes[sprockets[0]].width / 3}
         fontWeight="bold"
       >
-        {gear}
+        <TSpan>{gear}</TSpan>
       </Text>
     </Svg>
   );
