@@ -183,4 +183,6 @@ function Sprocket({ sprocketType, svgProps }: Props) {
   );
 }
 
+Sprocket.whyDidYouRender = true;
+
 export default Sprocket;

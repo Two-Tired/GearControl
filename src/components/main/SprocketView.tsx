@@ -32,6 +32,8 @@ export function SprocketView({}) {
   );
 }
 
+SprocketView.whyDidYouRender = true
+
 const styles = StyleSheet.create({
   gearContainer: {
     justifyContent: "center",
