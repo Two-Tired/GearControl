@@ -64,24 +64,24 @@ function Sprocket({ sprocketType, svgProps }: Props) {
       : gearCombination.rearSprocketKey;
   }, [gearCombination]);
 
-  const sprocketColors = [
-    "#323232",
-    "#404040",
-    "#4f4f4f",
-    "#5e5e5e",
-    "#6c6c6c",
-    "#7b7b7b",
-    "#8a8a8a",
-    "#989898",
-    "#a7a7a7",
-    "#b6b6b6",
-    "#c4c4c4",
-    "#d3d3d3",
-    "#e2e2e2",
-    "#f0f0f0",
-    "#ffffff",
-  ];
-  const highlightColor = "#d00000";
+  // const sprocketColors = [
+  //   "#323232",
+  //   "#404040",
+  //   "#4f4f4f",
+  //   "#5e5e5e",
+  //   "#6c6c6c",
+  //   "#7b7b7b",
+  //   "#8a8a8a",
+  //   "#989898",
+  //   "#a7a7a7",
+  //   "#b6b6b6",
+  //   "#c4c4c4",
+  //   "#d3d3d3",
+  //   "#e2e2e2",
+  //   "#f0f0f0",
+  //   "#ffffff",
+  // ];
+  // const highlightColor = "#d00000";
 
   const viewBox = useMemo((): string => {
     return (
@@ -161,7 +161,7 @@ function Sprocket({ sprocketType, svgProps }: Props) {
       <Circle
         cx="0"
         cy="0"
-        r ={innerRadius}
+        r={innerRadius}
         stroke="#000"
         strokeWidth={strokeWidth}
         fill="#f0f0f0"

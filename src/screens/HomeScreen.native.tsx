@@ -1,21 +1,17 @@
 import React, { useEffect, useMemo } from "react";
-import { useTranslation } from "react-i18next";
 import { ScrollView, View, StyleSheet, Dimensions } from "react-native";
-import { Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { setLocation, setLocationError } from "../redux/location/actions";
 import {
   AppState,
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
-  SettingsState,
-  SETTINGS_SPROCKET_TYPE,
 } from "../types";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { LocationObject } from "expo-location";
-import Sprocket from "../components/main/Sprocket";
+import { SprocketView } from "../components/main/SprocketView";
 
 type Props = {
   route: HomeScreenRouteProp;
@@ -23,7 +19,7 @@ type Props = {
 };
 
 export function HomeScreen({ route, navigation }: Props) {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useSelector<AppState, LocationObject>(
     (store) => store.location
@@ -32,12 +28,20 @@ export function HomeScreen({ route, navigation }: Props) {
   useEffect(() => {
     (async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      console.log(status)
       if (status !== "granted") {
         dispatch(setLocationError());
       }
     })();
 
-    // let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Highest});
+    Location.watchPositionAsync(
+      {
+        accuracy: Location.Accuracy.BestForNavigation,
+        timeInterval: 1000, // at min 5 sec between measurements
+        distanceInterval: 3, // at min 10 meters between measurements
+      },
+      locationCallback
+    );    // let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Highest});
     // dispatch(setLocation(location));
   }, []);
 
@@ -56,22 +60,13 @@ export function HomeScreen({ route, navigation }: Props) {
     locationCallback
   );
 
-  const convertToKMH = (speed: number | null): number => {
-    return speed ? speed * 3.6 : 0;
-  };
+  // const convertToKMH = (speed: number | null): number => {
+  //   return speed ? speed * 3.6 : 0;
+  // };
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.gearContainer}>
-        <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.FRONT} />
-        <View style={styles.horizontalSpaceSpeed}>
-          <Text style={[styles.speed]}>
-            {convertToKMH(location.coords.speed).toFixed(1)}
-          </Text>
-          <Text style={[styles.speedUnit]}>km/h</Text>
-        </View>
-        <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.REAR} />
-      </View>
+      <SprocketView />
       <View style={styles.mapContainer}>
         <MapView
           style={styles.map}

@@ -22,6 +22,7 @@ import * as Permissions from "expo-permissions";
 import { LocationObject } from "expo-location";
 import { createTransmissionTable, getGears } from "../helper/Transmissions";
 import Sprocket from "../components/main/Sprocket";
+import { SprocketView } from "../components/main/SprocketView";
 
 type Props = {
   route: HomeScreenRouteProp;
@@ -84,14 +85,7 @@ export function HomeScreen({ route, navigation }: Props) {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.gearContainer}>
-          <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.FRONT} />
-          <View style={styles.horizontalSpaceSpeed}>
-            <Text style={[styles.speed]}>{convertToKMH(gearCombination.speed).toFixed(1)}</Text>
-            <Text style={[styles.speedUnit]}>km/h</Text>
-          </View>
-          <Sprocket sprocketType={SETTINGS_SPROCKET_TYPE.REAR} />
-      </View>
+      <SprocketView />
       {/* <View style={styles.horizontal}>
         <Button
           style={styles.button}
