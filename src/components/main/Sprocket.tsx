@@ -107,10 +107,10 @@ function Sprocket({ sprocketType, svgProps }: Props) {
     (index: number): string => {
       return sprocketType === SETTINGS_SPROCKET_TYPE.FRONT
         ? sprockets.length - index == gear
-          ? colors.primary
+          ? "#000"
           : "#000"
         : index + 1 == gear
-        ? colors.primary
+        ? "#000"
         : "#000";
     },
     [gear]
@@ -120,11 +120,11 @@ function Sprocket({ sprocketType, svgProps }: Props) {
     (index: number): string => {
       return sprocketType === SETTINGS_SPROCKET_TYPE.FRONT
         ? sprockets.length - index == gear
-          ? colors.primary
-          : "#fff"
+          ? "#4f4f4f"
+          : "#d3d3d3"
         : index + 1 == gear
-        ? colors.primary
-        : "#fff";
+        ? "#4f4f4f"
+        : "#d3d3d3";
     },
     [gear]
   );
@@ -164,7 +164,7 @@ function Sprocket({ sprocketType, svgProps }: Props) {
         r ={innerRadius}
         stroke="#000"
         strokeWidth={strokeWidth}
-        fill="#fff"
+        fill="#d3d3d3"
       />
       <Text
         x="0"
