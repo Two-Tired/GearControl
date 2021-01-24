@@ -113,7 +113,7 @@ function Sprocket({ sprocketType, svgProps }: Props) {
         ? "#000"
         : "#000";
     },
-    [gear]
+    [gear, sprockets]
   );
 
   const highlightFill = useCallback(
@@ -121,12 +121,12 @@ function Sprocket({ sprocketType, svgProps }: Props) {
       return sprocketType === SETTINGS_SPROCKET_TYPE.FRONT
         ? sprockets.length - index == gear
           ? "#4f4f4f"
-          : "#d3d3d3"
+          : "#f0f0f0"
         : index + 1 == gear
         ? "#4f4f4f"
-        : "#d3d3d3";
+        : "#f0f0f0";
     },
-    [gear]
+    [gear, sprockets]
   );
 
   return (
@@ -164,7 +164,7 @@ function Sprocket({ sprocketType, svgProps }: Props) {
         r ={innerRadius}
         stroke="#000"
         strokeWidth={strokeWidth}
-        fill="#d3d3d3"
+        fill="#f0f0f0"
       />
       <Text
         x="0"
