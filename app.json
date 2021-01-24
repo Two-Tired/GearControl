@@ -21,7 +21,7 @@
     "android": {
       "package": "de.twotired.gearControl",
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/adaptive-icon.png",
+        "foregroundImage": "./src/assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "config": {
@@ -32,7 +32,7 @@
       "permissions": ["ACCESS_FINE_LOCATION"]
     },
     "web": {
-      "favicon": "./src/assets/favicon.png"
+      "favicon": "./src/assets/icon.png"
     }
   }
 }
