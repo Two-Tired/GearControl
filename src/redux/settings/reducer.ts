@@ -3,8 +3,8 @@ import { AppState, SetNumberAction, SetSettingsAction, SetSprocketAction, Settin
 import { SETTINGS_ACTION_TYPE } from "./actions";
 
 export const initialState: SettingsState = {
-  frontSprockets: [52,39,30],
-  rearSprockets: [13,14,15,16,17,18,19,21,23,25],
+  frontSprockets: [48,36,26],
+  rearSprockets: [13,15,18,21,24,28,32],
   favoriteCadence: 70, // revolutions per minute
   tireCircumference: 2150, // mm
 };
